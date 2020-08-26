@@ -26,7 +26,7 @@ class BillingRecord(base.BaseBunny):
 class BillingSummary(base.BaseBunny):
     Balance = base.FloatProperty(required=True)
     ThisMonthCharges = base.FloatProperty(required=True)
-    BillingRecords = base.ListProperty(BillingRecord)
+    BillingRecords = base.ListProperty()
     MonthlyChargesStorage = base.FloatProperty(required=True)
     MonthlyChargesEUTraffic = base.FloatProperty(required=True)
     MonthlyChargesUSTraffic = base.FloatProperty(required=True)
