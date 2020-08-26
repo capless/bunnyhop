@@ -4,19 +4,19 @@ from bunnyhop.base import BaseBunny
 class Zone(BaseBunny):
 
     def get(self, id):
-        return self.call_api(f"{self.endpoint_url}/pullzone/{id}", "GET", self.get_header())
+        return self.call_api(f"/pullzone/{id}", "GET")
 
-    def create(self, Name=None, OriginUrl=None, StorageZoneId=None, Type=None):
+    def create(self, Name, Type, OriginUrl, StorageZoneId=None):
         api_data = {
             'Name': Name,
             'Type': Type,
             'OriginUrl': OriginUrl,
-            'StorageZoneId': StorageZoneId
+            StorageZoneId: StorageZoneId
         }
-        return self.call_api(f"/pullzone", "POST", self.get_header(), api_data)
+        return self.call_api(f"/pullzone", "POST", self.get_header(), json_data=api_data)
 
     def list(self):
-        return self.call_api(f"/pullzone", "GET", self.get_header())
+        return self.call_api(f"/pullzone", "GET")
 
     def update(
             self,
@@ -88,7 +88,7 @@ class Zone(BaseBunny):
             "EnableTLS1": EnableTLS1,
             "EnableTLS1_1": EnableTLS1_1
         }
-        return self.call_api(f"/pullzone/{id}", "POST", self.get_header(), api_data)
+        return self.call_api(f"/pullzone/{id}", "POST", self.get_header(), json_data=api_data)
 
     def delete(self, id):
         return self.call_api(f"/pullzone/{id}", "DELETE", self.get_header())
@@ -117,4 +117,4 @@ class Zone(BaseBunny):
             "TriggerMatchingType": TriggerMatchingType,
             "Triggers": Triggers
         }
-        return self.call_api(f"/pullzone/{id}/edgerules/addOrUpdate", "POST", self.get_header(), api_data)
+        return self.call_api(f"/pullzone/{id}/edgerules/addOrUpdate", "POST", self.get_header(), json_data=api_data)
