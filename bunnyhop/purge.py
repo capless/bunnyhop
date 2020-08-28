@@ -4,4 +4,7 @@ from bunnyhop.base import BaseBunny
 class Purge(BaseBunny):
 
     def create(self, url):
-        return self.call_api(f"/purge", "POST", params={'url': url})
+        response = self.call_api(f"/purge", "POST", params={'url': url})
+        if type(response) is bytes:
+            return "Purge Queue was finished."
+        return response

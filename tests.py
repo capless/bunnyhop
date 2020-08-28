@@ -94,7 +94,7 @@ class TestZone(unittest.TestCase):
 
     def test_get(self):
         response = self.b.Zone.get("s")
-        self.assertEqual(response['Message'], 'The request is invalid.')
+        self.assertIsNone(response)
 
     def test_list(self):
         response = self.b.Zone.list()
