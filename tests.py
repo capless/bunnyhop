@@ -75,7 +75,7 @@ class TestStorageZone(unittest.TestCase):
 
     def test_create(self):
         response = self.b.Storage.create(1)
-        self.assertEqual(response['ErrorKey'], 'storagezone.validation')
+        self.assertTrue(response['ErrorKey'] == 'storagezone.validation' or response['ErrorKey'] == 'user.insufficient_balance')
 
     def test_all(self):
         response = self.b.Storage.all()
@@ -93,8 +93,8 @@ class TestZone(unittest.TestCase):
         self.b = None
 
     def test_get(self):
-        response = self.b.Zone.get("s")
-        self.assertIsNone(response)
+        response = self.b.Zone.get("")
+        self.assertEqual(response, 'Zone not found.')
 
     def test_list(self):
         response = self.b.Zone.list()
