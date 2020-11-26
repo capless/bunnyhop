@@ -20,7 +20,7 @@ class Storage(base.BaseBunny):
         if response.get('Id', None):
             return StorageZone(response.get('Password'), **response)            
         else: 
-            raise Exception(f"Error: {response.get('ErrorKey', None)} Message: {response.get('Message','')}")
+            raise ValueError(f"Error: {response.get('ErrorKey', None)} Message: {response.get('Message','')}")
 
     def all(self):
         return [StorageZone(i.get('Password'), **i) for i in
@@ -61,13 +61,13 @@ class StorageZone(base.BaseStorageBunny):
     def get(self, file_path):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
         if isinstance(response,dict) and response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
+            raise ValueError(f"Error:{response.get('Message','')}")
         return response
 
     def get_object(self, file_path):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
         if isinstance(response,dict) and response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
+            raise ValueError(f"Error:{response.get('Message','')}")
         return [StorageObject(self.api_key, self, **i) for i in self.call_storage_api(f"/{self.Name}/", "GET") if file_path==i.get('ObjectName','') ][0]
 
     def head_file(self, file_path):
@@ -91,7 +91,7 @@ class StorageZone(base.BaseStorageBunny):
     def delete_file(self, file_path):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "DELETE")
         if response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
+            raise ValueError(f"Error:{response.get('Message','')}")
         return response
 
 
