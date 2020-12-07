@@ -134,7 +134,7 @@ b.Purge.create(url='https://myzone.b-cdn.net/css/style.css')
 zone.purge_file('css/style.css')
 ```
 
-#### Purge Esntire Pull Zone
+#### Purge Entire Pull Zone
 ```python
 # From top-level
 b.Zone.purge(
@@ -158,6 +158,16 @@ b.Zone.create_edge_rule(
     Triggers = []
 )
 ```
+
+#### Hostnames
+```python
+# Create a hostname
+b.Zone.create_hostname("myHostname")
+
+# Delete a hostname
+b.Zone.delete_hostname("myHostname")
+```
+
 ## Storage
 
 ### Storage Zones
@@ -193,6 +203,7 @@ b.Storage.delete(1234)
 ```python
 zone = b.Storage.get(1234)
 # Returns: <StorageZone: example-a (id: 1234)>
+
 ```
 
 ### Storage Files
@@ -210,11 +221,15 @@ obj_list = zone.all()
 obj = zone.get('index.html')
 #Returns <StorageFile: index.html>
 
+# Get a file as StorageObject
+zone = b.Storage.get_object(1234)
+# Returns: <StorageObject: example-a (id: 1234)>
+
 # Download that File
 obj.download()
 
 # Delete a file
-zone.delete('index.html')
+zone.delete_file('index.html')
 
 # Upload a File
 zone.upload_file(dest_path='folder/path/error.html', local_path='/home/mj/work/error.html')
