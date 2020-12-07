@@ -6,6 +6,12 @@ from envs import env
 
 from bunnyhop import base
 
+try:
+    import brotli
+    BROTLI_ENABLED = True
+except ImportError:
+    BROTLI_ENABLED = False
+
 
 class Storage(base.BaseBunny):
 
@@ -73,7 +79,17 @@ class StorageZone(base.BaseStorageBunny):
     def head_file(self, file_path):
         return self.call_storage_api(f"/{self.Name}/{file_path}", "HEAD")
 
-    def upload_file(self, dest_path, file_name, local_path):
+    def upload_file(self, dest_path, file_name, local_path,compress=True):
+        if compress and BROTLI_ENABLED and file_name.endswith('.json'):
+            with open(os.path.join(local_path, file_name)) as json_file:
+                data = json.load(json_file)
+            data_str = json.dumps(data).encode('UTF-8')
+            compressed_data = brotli.compress(data_str)
+            file_name = os.path.splitext("file_name")[0]+".brotli"
+            compressed_file = open(os.path.join(local_path, file_name),"wb")
+            compressed_file.write(compressed_data)
+            compressed_file.close()
+
         return self.call_storage_api(f"/{self.Name}/{dest_path}/{file_name}", "PUT",
                                      data=open(local_path, 'rb').read())
 
