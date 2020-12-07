@@ -232,7 +232,7 @@ obj.download()
 zone.delete_file('index.html')
 
 # Upload a File
-zone.upload_file(dest_path='folder/path/error.html', local_path='/home/mj/work/error.html')
+zone.upload_file(dest_path='folder/path/', file_name='error.html', local_path='/home/mj/work/')
 # Returns: <StorageFile: error.html>
 
 # Create a file from a string
