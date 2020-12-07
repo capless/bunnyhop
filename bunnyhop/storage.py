@@ -57,7 +57,7 @@ class StorageZone(base.BaseStorageBunny):
     ReadOnlyPassword = base.CharProperty(required=False)
 
     def __str__(self):
-        return self.Name
+        return f"{self.Name} (id: {self.Id})"
 
     def all(self, folder=''):
         if not folder.endswith('/'):
