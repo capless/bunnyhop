@@ -85,13 +85,13 @@ class StorageZone(base.BaseStorageBunny):
                 data = json.load(json_file)
             data_str = json.dumps(data).encode('UTF-8')
             compressed_data = brotli.compress(data_str)
-            file_name = os.path.splitext("file_name")[0]+".brotli"
+            file_name = os.path.splitext(file_name)[0]+".brotli"
             compressed_file = open(os.path.join(local_path, file_name),"wb")
             compressed_file.write(compressed_data)
             compressed_file.close()
 
         return self.call_storage_api(f"/{self.Name}/{dest_path}/{file_name}", "PUT",
-                                     data=open(local_path, 'rb').read())
+                                     data=open(os.path.join(local_path, file_name), 'rb').read())
 
     def create_file(self, file_name, content):
         pass
