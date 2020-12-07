@@ -68,6 +68,8 @@ class StorageZone(base.BaseStorageBunny):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
         if isinstance(response,dict) and response.get('HttpCode',0) == 404:
             raise ValueError(f"Error:{response.get('Message','')}")
+        if file_path.endswith('.brotli'):
+            response = brotli.decompress(response)
         return response
 
     def get_object(self, file_path):
