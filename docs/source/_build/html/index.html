@@ -339,6 +339,9 @@
 </div>
 <div class="section" id="storage">
 <h2>Storage<a class="headerlink" href="#storage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="storage-zones">
+<h3>Storage Zones<a class="headerlink" href="#storage-zones" title="Permalink to this headline">¶</a></h3>
+</div>
 <div class="section" id="create-storage-zone">
 <h3>Create Storage Zone<a class="headerlink" href="#create-storage-zone" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Storage Zone (available regions are listed below)</span>
@@ -376,6 +379,9 @@
 <span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="storage-files">
+<h3>Storage Files<a class="headerlink" href="#storage-files" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a Storage Zone</span>
 <span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">StorageZone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
 <span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
@@ -407,6 +413,9 @@
 <span class="c1"># Returns: &lt;StorageFile: base.css&gt;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="storage-json-files">
+<h3>Storage JSON Files<a class="headerlink" href="#storage-json-files" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a json file</span>
 <span class="n">mj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">create_json</span><span class="p">(</span><span class="s1">&#39;23.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="s1">&#39;Michael&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jordan&#39;</span><span class="p">})</span>
 <span class="c1"># Returns &lt;StorageJSONFile: 23.json&gt;</span>
@@ -437,11 +446,17 @@
 </div>
 <div class="section" id="billing">
 <h1>Billing<a class="headerlink" href="#billing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="get-billing-summary">
+<h2>Get Billing Summary<a class="headerlink" href="#get-billing-summary" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="applycode">
+<h2>ApplyCode<a class="headerlink" href="#applycode" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">applycode</span><span class="p">(</span><span class="n">couponCode</span><span class="o">=</span><span class="s1">&#39;somecode123&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 

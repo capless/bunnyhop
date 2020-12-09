@@ -195,7 +195,7 @@ Storage
 -------
 
 Storage Zones
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 Create Storage Zone
 ^^^^^^^^^^^^^^^^^^^
@@ -240,7 +240,7 @@ Get a Storage Zone
    # Returns: <StorageZone: example-a (id: 1234)>
 
 Storage Files
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -275,7 +275,7 @@ Storage Files
    # Returns: <StorageFile: base.css>
 
 Storage JSON Files
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
@@ -310,14 +310,14 @@ Billing
 =======
 
 Get Billing Summary
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 .. code:: python
 
    b.Billing.get()
 
 ApplyCode
-^^^^^^^^^
+---------
 
 .. code:: python
 
