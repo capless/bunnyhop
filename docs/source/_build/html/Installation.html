@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; bunnyhop 0.1.1 documentation</title>
+  <title>Installation &mdash; bunnyhop 0.1.1 documentation</title>
   
 
   
@@ -34,8 +34,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Welcome to bunnyhop’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,11 +83,11 @@
             
             
               <p class="caption"><span class="caption-text">Library Usage:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="usage/Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage/Pullzone.html">Pull Zone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage/Storage.html">Storage Zone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage/Stats.html">Stats</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
@@ -136,12 +138,14 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Index</li>
+      <li>Installation</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="_sources/Installation.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -153,11 +157,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Install the package (or add it to your <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install bunnyhop
+</pre></div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bunnyhop</span> <span class="kn">import</span> <span class="n">Bunny</span>
 
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+<span class="n">b</span> <span class="o">=</span> <span class="n">Bunny</span><span class="p">(</span><span class="s1">&#39;&lt;api_key&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -165,6 +178,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to bunnyhop’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

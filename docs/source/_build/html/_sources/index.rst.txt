@@ -8,7 +8,16 @@ Welcome to bunnyhop's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Library Usage:
+
+   usage/Installation
+   usage/Pullzone
+   usage/Storage
+   usage/Stats
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Miscellaneous:
 
    license
 
@@ -19,4 +28,3 @@ Welcome to bunnyhop's documentation!
 .. * :ref:`modindex`
 .. * :ref:`search`
 
-.. include:: README.rst

@@ -7,12 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>bunnyhop &mdash; bunnyhop 0.1.1 documentation</title>
+  <title>Pull Zone &mdash; bunnyhop 0.1.1 documentation</title>
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
 
   
   
@@ -21,21 +21,21 @@
 
   
   <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
+    <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -49,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> bunnyhop
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> bunnyhop
           
 
           
@@ -62,7 +62,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -80,15 +80,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Library Usage:</span></p>
+              <p class="caption"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Pullzone.html">Pull Zone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Storage.html">Storage Zone</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Miscellaneous:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 
             
@@ -104,7 +98,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">bunnyhop</a>
+          <a href="../index.html">bunnyhop</a>
         
       </nav>
 
@@ -133,15 +127,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>bunnyhop</li>
+      <li>Pull Zone</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/usage/Pullzone.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -154,36 +148,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="bunnyhop">
-<h1>bunnyhop<a class="headerlink" href="#bunnyhop" title="Permalink to this headline">¶</a></h1>
-<p>Python library for BunnyCDN</p>
-<div class="section" id="status">
-<h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
-<p>Documentation only phase</p>
-</div>
-<div class="section" id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">bunnyhop</span></code></p>
-</div>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bunnyhop</span> <span class="kn">import</span> <span class="n">Bunny</span>
-
-<span class="n">b</span> <span class="o">=</span> <span class="n">Bunny</span><span class="p">(</span><span class="s1">&#39;&lt;api_key&gt;&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="pull-zones">
-<h2>Pull Zones<a class="headerlink" href="#pull-zones" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="pull-zone">
+<h1>Pull Zone<a class="headerlink" href="#pull-zone" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="get-a-pull-zone">
-<h3>Get a Pull Zone<a class="headerlink" href="#get-a-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Get a Pull Zone<a class="headerlink" href="#get-a-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
 <span class="c1">#Returns: &lt;Zone: myzone &gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="create-a-pull-zone">
-<h3>Create a Pull Zone<a class="headerlink" href="#create-a-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Create a Pull Zone<a class="headerlink" href="#create-a-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">,</span>
     <span class="n">Type</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># 0 = Standard and 1 = High Volume</span>
@@ -194,13 +169,13 @@
 </div>
 </div>
 <div class="section" id="list-pull-zones">
-<h3>List Pull Zones<a class="headerlink" href="#list-pull-zones" title="Permalink to this headline">¶</a></h3>
+<h2>List Pull Zones<a class="headerlink" href="#list-pull-zones" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="update-a-pull-zone">
-<h3>Update a Pull Zone<a class="headerlink" href="#update-a-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Update a Pull Zone<a class="headerlink" href="#update-a-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;zone-id&#39;</span><span class="p">,</span> <span class="c1">#Positional Argument</span>
     <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;http://example.org&#39;</span><span class="p">,</span>
@@ -276,7 +251,7 @@
 </div>
 </div>
 <div class="section" id="delete-pull-zone">
-<h3>Delete Pull Zone<a class="headerlink" href="#delete-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Delete Pull Zone<a class="headerlink" href="#delete-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#From top-level</span>
 <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
 
@@ -286,7 +261,7 @@
 </div>
 </div>
 <div class="section" id="purge-file-from-pull-zone">
-<h3>Purge File From Pull Zone<a class="headerlink" href="#purge-file-from-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Purge File From Pull Zone<a class="headerlink" href="#purge-file-from-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From top-level</span>
 <span class="n">b</span><span class="o">.</span><span class="n">Purge</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://myzone.b-cdn.net/css/style.css&#39;</span><span class="p">)</span>
 
@@ -296,7 +271,7 @@
 </div>
 </div>
 <div class="section" id="purge-entire-pull-zone">
-<h3>Purge Entire Pull Zone<a class="headerlink" href="#purge-entire-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Purge Entire Pull Zone<a class="headerlink" href="#purge-entire-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From top-level</span>
 <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">purge</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span>
@@ -307,7 +282,7 @@
 </div>
 </div>
 <div class="section" id="add-edge-rule-to-pull-zone">
-<h3>Add Edge Rule to Pull Zone<a class="headerlink" href="#add-edge-rule-to-pull-zone" title="Permalink to this headline">¶</a></h3>
+<h2>Add Edge Rule to Pull Zone<a class="headerlink" href="#add-edge-rule-to-pull-zone" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_edge_rule</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">,</span>
     <span class="n">Guid</span><span class="o">=</span><span class="s2">&quot;6a2e94df-8aa9-4cd2-b89d-16752102ef9f&quot;</span><span class="p">,</span> <span class="c1"># GUID of the edge rule</span>
@@ -323,134 +298,12 @@
 </div>
 </div>
 <div class="section" id="hostnames">
-<h3>Hostnames<a class="headerlink" href="#hostnames" title="Permalink to this headline">¶</a></h3>
+<h2>Hostnames<a class="headerlink" href="#hostnames" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a hostname</span>
 <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_hostname</span><span class="p">(</span><span class="s2">&quot;myHostname&quot;</span><span class="p">)</span>
 
 <span class="c1"># Delete a hostname</span>
 <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">delete_hostname</span><span class="p">(</span><span class="s2">&quot;myHostname&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="storage">
-<h2>Storage<a class="headerlink" href="#storage" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="storage-zones">
-<h3>Storage Zones<a class="headerlink" href="#storage-zones" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="create-storage-zone">
-<h3>Create Storage Zone<a class="headerlink" href="#create-storage-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Storage Zone (available regions are listed below)</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;example-a&#39;</span><span class="p">,</span> <span class="n">main_storage_region</span><span class="o">=</span><span class="s1">&#39;NY&#39;</span><span class="p">,</span> <span class="n">replica_regions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;SG&#39;</span><span class="p">,</span> <span class="s1">&#39;SYD&#39;</span><span class="p">])</span>
-<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
-</pre></div>
-</div>
-<div class="section" id="storage-regions">
-<h4>Storage Regions<a class="headerlink" href="#storage-regions" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>DE - Europe (Falkenstein)</p></li>
-<li><p>NY - North America (New York)</p></li>
-<li><p>SG - Asia (Singapore)</p></li>
-<li><p>SYD - Oceania (Sydney)</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="list-storage-zones">
-<h3>List Storage Zones<a class="headerlink" href="#list-storage-zones" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="c1"># Returns: [&lt;StorageZone: example-a (id: 1234)&gt;, &lt;StorageZone: example-b (id: 12345)&gt;]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="delete-a-storage-zone">
-<h3>Delete a Storage Zone<a class="headerlink" href="#delete-a-storage-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: None</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="get-a-storage-zone">
-<h3>Get a Storage Zone<a class="headerlink" href="#get-a-storage-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="storage-files">
-<h3>Storage Files<a class="headerlink" href="#storage-files" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a Storage Zone</span>
-<span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">StorageZone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
-
-<span class="c1"># Lists files in the zone</span>
-<span class="n">obj_list</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="c1"># Returns [&lt;StorageFile: index.html&gt;, &lt;StorageFile: base.css&gt;]</span>
-
-<span class="c1"># Get a file</span>
-<span class="n">obj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
-<span class="c1">#Returns &lt;StorageFile: index.html&gt;</span>
-
-<span class="c1"># Get a file as StorageObject</span>
-<span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageObject: example-a (id: 1234)&gt;</span>
-
-<span class="c1"># Download that File</span>
-<span class="n">obj</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
-
-<span class="c1"># Delete a file</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
-
-<span class="c1"># Upload a File</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">dest_path</span><span class="o">=</span><span class="s1">&#39;folder/path/&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;error.html&#39;</span><span class="p">,</span> <span class="n">local_path</span><span class="o">=</span><span class="s1">&#39;/home/mj/work/&#39;</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageFile: error.html&gt;</span>
-
-<span class="c1"># Create a file from a string</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">create_file</span><span class="p">(</span><span class="s1">&#39;base.css&#39;</span><span class="p">,</span> <span class="s2">&quot;body {background-color: powderblue;}&quot;</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageFile: base.css&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="storage-json-files">
-<h3>Storage JSON Files<a class="headerlink" href="#storage-json-files" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a json file</span>
-<span class="n">mj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">create_json</span><span class="p">(</span><span class="s1">&#39;23.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="s1">&#39;Michael&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jordan&#39;</span><span class="p">})</span>
-<span class="c1"># Returns &lt;StorageJSONFile: 23.json&gt;</span>
-
-<span class="c1"># Get information from file</span>
-<span class="n">mj</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
-<span class="c1"># Returns: &#39;Michael&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="purge">
-<h1>Purge<a class="headerlink" href="#purge" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="create-a-purge">
-<h2>Create a Purge<a class="headerlink" href="#create-a-purge" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Purge a zone or file</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Purge</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://myzone.b-cdn.net/style.css&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="stats">
-<h1>Stats<a class="headerlink" href="#stats" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dateFrom</span><span class="o">=</span><span class="s1">&#39;2018-12-01&#39;</span><span class="p">,</span> <span class="n">dateTo</span><span class="o">=</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="n">pullZone</span><span class="o">=</span><span class="s1">&#39;example-zone&#39;</span><span class="p">,</span> <span class="n">serverZoneId</span><span class="o">=</span><span class="s1">&#39;serverZoneID&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="billing">
-<h1>Billing<a class="headerlink" href="#billing" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="get-billing-summary">
-<h2>Get Billing Summary<a class="headerlink" href="#get-billing-summary" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="applycode">
-<h2>ApplyCode<a class="headerlink" href="#applycode" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">applycode</span><span class="p">(</span><span class="n">couponCode</span><span class="o">=</span><span class="s1">&#39;somecode123&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

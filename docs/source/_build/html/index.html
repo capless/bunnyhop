@@ -36,7 +36,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="License" href="license.html" /> 
+    <link rel="next" title="Installation" href="usage/Installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,7 +81,14 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Library Usage:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/Pullzone.html">Pull Zone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/Storage.html">Storage Zone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/Stats.html">Stats</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
@@ -152,311 +159,45 @@
   <div class="section" id="welcome-to-bunnyhop-s-documentation">
 <h1>Welcome to bunnyhop’s documentation!<a class="headerlink" href="#welcome-to-bunnyhop-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Library Usage:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/Installation.html#getting-started">Getting Started</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/Pullzone.html">Pull Zone</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#get-a-pull-zone">Get a Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#create-a-pull-zone">Create a Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#list-pull-zones">List Pull Zones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#update-a-pull-zone">Update a Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#delete-pull-zone">Delete Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#purge-file-from-pull-zone">Purge File From Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#purge-entire-pull-zone">Purge Entire Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#add-edge-rule-to-pull-zone">Add Edge Rule to Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Pullzone.html#hostnames">Hostnames</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/Storage.html">Storage Zone</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/Storage.html#create-storage-zone">Create Storage Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Storage.html#list-storage-zones">List Storage Zones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Storage.html#delete-a-storage-zone">Delete a Storage Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Storage.html#get-a-storage-zone">Get a Storage Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Storage.html#storage-files">Storage Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Storage.html#storage-json-files">Storage JSON Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage/Stats.html">Stats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/Stats.html#get-billing-summary">Get Billing Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/Stats.html#applying-coupon-codes">Applying coupon codes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
-</div>
-</div>
-<div class="section" id="bunnyhop">
-<h1>bunnyhop<a class="headerlink" href="#bunnyhop" title="Permalink to this headline">¶</a></h1>
-<p>Python library for BunnyCDN</p>
-<div class="section" id="status">
-<h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
-<p>Documentation only phase</p>
-</div>
-<div class="section" id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">bunnyhop</span></code></p>
-</div>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bunnyhop</span> <span class="kn">import</span> <span class="n">Bunny</span>
-
-<span class="n">b</span> <span class="o">=</span> <span class="n">Bunny</span><span class="p">(</span><span class="s1">&#39;&lt;api_key&gt;&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="pull-zones">
-<h2>Pull Zones<a class="headerlink" href="#pull-zones" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="get-a-pull-zone">
-<h3>Get a Pull Zone<a class="headerlink" href="#get-a-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
-<span class="c1">#Returns: &lt;Zone: myzone &gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="create-a-pull-zone">
-<h3>Create a Pull Zone<a class="headerlink" href="#create-a-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">,</span>
-    <span class="n">Type</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># 0 = Standard and 1 = High Volume</span>
-    <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;https://example.org&#39;</span><span class="p">,</span>
-    <span class="n">StorageZoneId</span><span class="o">=</span><span class="s1">&#39;storage-zone-id&#39;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="list-pull-zones">
-<h3>List Pull Zones<a class="headerlink" href="#list-pull-zones" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="update-a-pull-zone">
-<h3>Update a Pull Zone<a class="headerlink" href="#update-a-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;zone-id&#39;</span><span class="p">,</span> <span class="c1">#Positional Argument</span>
-    <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;http://example.org&#39;</span><span class="p">,</span>
-    <span class="n">AllowedReferrers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;app.example.org&#39;</span><span class="p">,</span> <span class="s1">&#39;www.example.org&#39;</span><span class="p">],</span>
-    <span class="n">BlockedIps</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;122.33.22.11&#39;</span><span class="p">],</span>
-    <span class="n">EnableCacheSlice</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneUS</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneEU</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneASIA</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneSA</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneAF</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">ZoneSecurityEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">ZoneSecurityIncludeHashRemoteIP</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">IgnoreQueryStrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">MonthlyBandwidthLimit</span><span class="o">=</span><span class="mi">1073741824</span><span class="p">,</span>
-    <span class="n">AccessControlOriginHeaderExtensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">],</span>
-    <span class="n">EnableAccessControlOriginHeader</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">BlockRootPathAccess</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableWebpVary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableLogging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">DisableCookies</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">BudgetRedirectedCountries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;BR&#39;</span><span class="p">],</span>
-    <span class="n">BlockedCountries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;BR&#39;</span><span class="p">],</span>
-    <span class="n">EnableOriginShield</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">OriginShieldZoneCode</span><span class="o">=</span><span class="s1">&#39;FR&#39;</span><span class="p">,</span>
-    <span class="n">AddCanonicalHeader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">CacheControlMaxAgeOverride</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">AddHostHeader</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AWSSigningEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AWSSigningKey</span><span class="o">=</span><span class="s1">&#39;AK_EXAMPLEKEY&#39;</span><span class="p">,</span>
-    <span class="n">AWSSigningRegionName</span><span class="o">=</span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-    <span class="n">AWSSigningSecret</span><span class="o">=</span><span class="s1">&#39;SK_EXAMPLESECRETKET&#39;</span><span class="p">,</span>
-    <span class="n">EnableTLS1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableTLS1_1</span><span class="o">=</span><span class="kc">True</span>
-
-<span class="p">)</span>
-<span class="c1"># From Zone object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-    <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;http://example.org&#39;</span><span class="p">,</span>
-    <span class="n">AllowedReferrers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;app.example.org&#39;</span><span class="p">,</span> <span class="s1">&#39;www.example.org&#39;</span><span class="p">],</span>
-    <span class="n">BlockedIps</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;122.33.22.11&#39;</span><span class="p">],</span>
-    <span class="n">EnableCacheSlice</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneUS</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneEU</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneASIA</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneSA</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneAF</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">ZoneSecurityEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">ZoneSecurityIncludeHashRemoteIP</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">IgnoreQueryStrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">MonthlyBandwidthLimit</span><span class="o">=</span><span class="mi">1073741824</span><span class="p">,</span>
-    <span class="n">AccessControlOriginHeaderExtensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">],</span>
-    <span class="n">EnableAccessControlOriginHeader</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">BlockRootPathAccess</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableWebpVary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableLogging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">DisableCookies</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">BudgetRedirectedCountries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;BR&#39;</span><span class="p">],</span>
-    <span class="n">BlockedCountries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;BR&#39;</span><span class="p">],</span>
-    <span class="n">EnableOriginShield</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">OriginShieldZoneCode</span><span class="o">=</span><span class="s1">&#39;FR&#39;</span><span class="p">,</span>
-    <span class="n">AddCanonicalHeader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">CacheControlMaxAgeOverride</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">AddHostHeader</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AWSSigningEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AWSSigningKey</span><span class="o">=</span><span class="s1">&#39;AK_EXAMPLEKEY&#39;</span><span class="p">,</span>
-    <span class="n">AWSSigningRegionName</span><span class="o">=</span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-    <span class="n">AWSSigningSecret</span><span class="o">=</span><span class="s1">&#39;SK_EXAMPLESECRETKET&#39;</span><span class="p">,</span>
-    <span class="n">EnableTLS1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableTLS1_1</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="delete-pull-zone">
-<h3>Delete Pull Zone<a class="headerlink" href="#delete-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#From top-level</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
-
-<span class="c1">#From Zone object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="purge-file-from-pull-zone">
-<h3>Purge File From Pull Zone<a class="headerlink" href="#purge-file-from-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From top-level</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Purge</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://myzone.b-cdn.net/css/style.css&#39;</span><span class="p">)</span>
-
-<span class="c1"># From Zone Object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">purge_file</span><span class="p">(</span><span class="s1">&#39;css/style.css&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="purge-entire-pull-zone">
-<h3>Purge Entire Pull Zone<a class="headerlink" href="#purge-entire-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From top-level</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">purge</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span>
-<span class="p">)</span>
-<span class="c1"># From Zone object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">purge</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="add-edge-rule-to-pull-zone">
-<h3>Add Edge Rule to Pull Zone<a class="headerlink" href="#add-edge-rule-to-pull-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_edge_rule</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">,</span>
-    <span class="n">Guid</span><span class="o">=</span><span class="s2">&quot;6a2e94df-8aa9-4cd2-b89d-16752102ef9f&quot;</span><span class="p">,</span> <span class="c1"># GUID of the edge rule</span>
-    <span class="n">ActionParameter1</span> <span class="o">=</span> <span class="s2">&quot;My-Header&quot;</span><span class="p">,</span>
-    <span class="n">ActionParameter2</span> <span class="o">=</span> <span class="s2">&quot;HeaderValue&quot;</span><span class="p">,</span>
-    <span class="n">Enabled</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">Description</span> <span class="o">=</span> <span class="s2">&quot;My header value&quot;</span><span class="p">,</span>
-    <span class="n">ActionType</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># 0 = ForceSSL, 1 = Redirect, 2 = OriginUrl, 3 = OverrideCacheTime, 4 = BlockRequest, 5 = SetResponseHeader, 6 = SetRequestHeader, 7 = ForceDownload, 8 = DisableTokenAuthentication, 9 = EnableTokenAuthentication</span>
-    <span class="n">TriggerMatchingType</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">Triggers</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="hostnames">
-<h3>Hostnames<a class="headerlink" href="#hostnames" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a hostname</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_hostname</span><span class="p">(</span><span class="s2">&quot;myHostname&quot;</span><span class="p">)</span>
-
-<span class="c1"># Delete a hostname</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">delete_hostname</span><span class="p">(</span><span class="s2">&quot;myHostname&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="storage">
-<h2>Storage<a class="headerlink" href="#storage" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="storage-zones">
-<h3>Storage Zones<a class="headerlink" href="#storage-zones" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="create-storage-zone">
-<h3>Create Storage Zone<a class="headerlink" href="#create-storage-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Storage Zone (available regions are listed below)</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;example-a&#39;</span><span class="p">,</span> <span class="n">main_storage_region</span><span class="o">=</span><span class="s1">&#39;NY&#39;</span><span class="p">,</span> <span class="n">replica_regions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;SG&#39;</span><span class="p">,</span> <span class="s1">&#39;SYD&#39;</span><span class="p">])</span>
-<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
-</pre></div>
-</div>
-<div class="section" id="storage-regions">
-<h4>Storage Regions<a class="headerlink" href="#storage-regions" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>DE - Europe (Falkenstein)</p></li>
-<li><p>NY - North America (New York)</p></li>
-<li><p>SG - Asia (Singapore)</p></li>
-<li><p>SYD - Oceania (Sydney)</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="list-storage-zones">
-<h3>List Storage Zones<a class="headerlink" href="#list-storage-zones" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="c1"># Returns: [&lt;StorageZone: example-a (id: 1234)&gt;, &lt;StorageZone: example-b (id: 12345)&gt;]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="delete-a-storage-zone">
-<h3>Delete a Storage Zone<a class="headerlink" href="#delete-a-storage-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: None</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="get-a-storage-zone">
-<h3>Get a Storage Zone<a class="headerlink" href="#get-a-storage-zone" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="storage-files">
-<h3>Storage Files<a class="headerlink" href="#storage-files" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a Storage Zone</span>
-<span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">StorageZone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
-
-<span class="c1"># Lists files in the zone</span>
-<span class="n">obj_list</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<span class="c1"># Returns [&lt;StorageFile: index.html&gt;, &lt;StorageFile: base.css&gt;]</span>
-
-<span class="c1"># Get a file</span>
-<span class="n">obj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
-<span class="c1">#Returns &lt;StorageFile: index.html&gt;</span>
-
-<span class="c1"># Get a file as StorageObject</span>
-<span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageObject: example-a (id: 1234)&gt;</span>
-
-<span class="c1"># Download that File</span>
-<span class="n">obj</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
-
-<span class="c1"># Delete a file</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
-
-<span class="c1"># Upload a File</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">dest_path</span><span class="o">=</span><span class="s1">&#39;folder/path/&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;error.html&#39;</span><span class="p">,</span> <span class="n">local_path</span><span class="o">=</span><span class="s1">&#39;/home/mj/work/&#39;</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageFile: error.html&gt;</span>
-
-<span class="c1"># Create a file from a string</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">create_file</span><span class="p">(</span><span class="s1">&#39;base.css&#39;</span><span class="p">,</span> <span class="s2">&quot;body {background-color: powderblue;}&quot;</span><span class="p">)</span>
-<span class="c1"># Returns: &lt;StorageFile: base.css&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="storage-json-files">
-<h3>Storage JSON Files<a class="headerlink" href="#storage-json-files" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a json file</span>
-<span class="n">mj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">create_json</span><span class="p">(</span><span class="s1">&#39;23.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="s1">&#39;Michael&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jordan&#39;</span><span class="p">})</span>
-<span class="c1"># Returns &lt;StorageJSONFile: 23.json&gt;</span>
-
-<span class="c1"># Get information from file</span>
-<span class="n">mj</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
-<span class="c1"># Returns: &#39;Michael&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="purge">
-<h1>Purge<a class="headerlink" href="#purge" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="create-a-purge">
-<h2>Create a Purge<a class="headerlink" href="#create-a-purge" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Purge a zone or file</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Purge</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://myzone.b-cdn.net/style.css&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="stats">
-<h1>Stats<a class="headerlink" href="#stats" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dateFrom</span><span class="o">=</span><span class="s1">&#39;2018-12-01&#39;</span><span class="p">,</span> <span class="n">dateTo</span><span class="o">=</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="n">pullZone</span><span class="o">=</span><span class="s1">&#39;example-zone&#39;</span><span class="p">,</span> <span class="n">serverZoneId</span><span class="o">=</span><span class="s1">&#39;serverZoneID&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="billing">
-<h1>Billing<a class="headerlink" href="#billing" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="get-billing-summary">
-<h2>Get Billing Summary<a class="headerlink" href="#get-billing-summary" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="applycode">
-<h2>ApplyCode<a class="headerlink" href="#applycode" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">applycode</span><span class="p">(</span><span class="n">couponCode</span><span class="o">=</span><span class="s1">&#39;somecode123&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 </div>
 
@@ -468,7 +209,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="usage/Installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
