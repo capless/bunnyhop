@@ -35,7 +35,9 @@
 
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="License" href="../license.html" />
+    <link rel="prev" title="Storage Zone" href="Storage.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,7 +82,18 @@
               
             
             
-              <p class="caption"><span class="caption-text">Miscellaneous:</span></p>
+              <p class="caption"><span class="caption-text">Library Usage:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pullzone.html">Pull Zone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Storage.html">Storage Zone</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Stats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#get-billing-summary">Get Billing Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#applying-coupon-codes">Applying coupon codes</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
@@ -150,18 +163,33 @@
             
   <div class="section" id="stats">
 <h1>Stats<a class="headerlink" href="#stats" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dateFrom</span><span class="o">=</span><span class="s1">&#39;2018-12-01&#39;</span><span class="p">,</span> <span class="n">dateTo</span><span class="o">=</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="n">pullZone</span><span class="o">=</span><span class="s1">&#39;example-zone&#39;</span><span class="p">,</span> <span class="n">serverZoneId</span><span class="o">=</span><span class="s1">&#39;serverZoneID&#39;</span><span class="p">)</span>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Stats.get(date_From,</span> <span class="pre">dateTo,</span> <span class="pre">pullZone,</span> <span class="pre">serverZoneId)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
+<p>Usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dateFrom</span><span class="o">=</span><span class="s1">&#39;2018-12-01&#39;</span><span class="p">,</span>
+            <span class="n">dateTo</span><span class="o">=</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span>
+            <span class="n">pullZone</span><span class="o">=</span><span class="s1">&#39;example-zone&#39;</span><span class="p">,</span>
+            <span class="n">serverZoneId</span><span class="o">=</span><span class="s1">&#39;serverZoneID&#39;</span>
+            <span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="get-billing-summary">
 <h2>Get Billing Summary<a class="headerlink" href="#get-billing-summary" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Billing.get()</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
 </div>
 <div class="section" id="applying-coupon-codes">
 <h2>Applying coupon codes<a class="headerlink" href="#applying-coupon-codes" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">applycode</span><span class="p">(</span><span class="n">couponCode</span><span class="o">=</span><span class="s1">&#39;somecode123&#39;</span><span class="p">)</span>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Billing.applycode(couponCode)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
+<p>Usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Billing</span><span class="o">.</span><span class="n">applycode</span><span class="p">(</span><span class="n">couponCode</span><span class="o">=</span><span class="s1">&#39;somecode123&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -172,6 +200,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Storage.html" class="btn btn-neutral float-left" title="Storage Zone" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
