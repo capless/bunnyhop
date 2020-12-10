@@ -35,7 +35,9 @@
 
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Storage Zone" href="Storage.html" />
+    <link rel="prev" title="Installation" href="Installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,7 +82,45 @@
               
             
             
-              <p class="caption"><span class="caption-text">Miscellaneous:</span></p>
+              <p class="caption"><span class="caption-text">Library Usage:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pull Zone</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#get-a-pull-zone">Get a Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-pull-zone">Create a Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-pull-zones">List Pull Zones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-a-pull-zone">Update a Pull Zone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#from-id">From Id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-zone-object">From Zone Object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#delete-pull-zone">Delete Pull Zone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">From Id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">From Zone Object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#purge-file-from-pull-zone">Purge File From Pull Zone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">From Id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">From Zone Object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#purge-entire-pull-zone">Purge Entire Pull Zone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">From Id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">From Zone Object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#add-edge-rule-to-pull-zone">Add Edge Rule to Pull Zone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hostnames">Hostnames</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-hostname">Create a hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delete-a-hostname">Delete a hostname</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Storage.html">Storage Zone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Stats.html">Stats</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
@@ -152,14 +192,24 @@
 <h1>Pull Zone<a class="headerlink" href="#pull-zone" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="get-a-pull-zone">
 <h2>Get a Pull Zone<a class="headerlink" href="#get-a-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.get(id)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
+<p>Usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
 <span class="c1">#Returns: &lt;Zone: myzone &gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="create-a-pull-zone">
 <h2>Create a Pull Zone<a class="headerlink" href="#create-a-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.create(name,</span> <span class="pre">Type,</span> <span class="pre">OriginUrl,</span> <span class="pre">StorageZoneId)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
+<p>Usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
     <span class="n">Name</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">,</span>
     <span class="n">Type</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># 0 = Standard and 1 = High Volume</span>
     <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;https://example.org&#39;</span><span class="p">,</span>
@@ -170,13 +220,59 @@
 </div>
 <div class="section" id="list-pull-zones">
 <h2>List Pull Zones<a class="headerlink" href="#list-pull-zones" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.list()</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
 </div>
 <div class="section" id="update-a-pull-zone">
 <h2>Update a Pull Zone<a class="headerlink" href="#update-a-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+<div class="section" id="from-id">
+<h3>From Id<a class="headerlink" href="#from-id" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.update(Id,</span> <span class="pre">**kwargs)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="from-zone-object">
+<h3>From Zone Object<a class="headerlink" href="#from-zone-object" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">zone.update(**kwargs)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
+<p>Optional Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">OriginUrl</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AllowedReferrers</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BlockedIps</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableCacheSlice</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableGeoZoneUS</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableGeoZoneASIA</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableGeoZoneSA</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableGeoZoneAF</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZoneSecurityEnabled</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ZoneSecurityIncludeHashRemoteIP</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IgnoreQueryStrings</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MonthlyBandwidthLimit</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AccessControlOriginHeaderExtensions</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableAccessControlOriginHeader</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BlockRootPathAccess</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableWebpVary</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableLogging</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DisableCookies</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableOriginShield</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OriginShieldZoneCode</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AddCanonicalHeader</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CacheControlMaxAgeOverride</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AddHostHeader</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AWSSigningEnabled</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AWSSigningKey</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AWSSigningRegionName</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AWSSigningSecret</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableTLS1</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EnableTLS1_1</span></code> <em>TODO: Add description</em></p></li>
+</ul>
+<p>Usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;zone-id&#39;</span><span class="p">,</span> <span class="c1">#Positional Argument</span>
     <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;http://example.org&#39;</span><span class="p">,</span>
     <span class="n">AllowedReferrers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;app.example.org&#39;</span><span class="p">,</span> <span class="s1">&#39;www.example.org&#39;</span><span class="p">],</span>
@@ -210,80 +306,78 @@
     <span class="n">AWSSigningSecret</span><span class="o">=</span><span class="s1">&#39;SK_EXAMPLESECRETKET&#39;</span><span class="p">,</span>
     <span class="n">EnableTLS1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">EnableTLS1_1</span><span class="o">=</span><span class="kc">True</span>
-
-<span class="p">)</span>
-<span class="c1"># From Zone object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-    <span class="n">OriginUrl</span><span class="o">=</span><span class="s1">&#39;http://example.org&#39;</span><span class="p">,</span>
-    <span class="n">AllowedReferrers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;app.example.org&#39;</span><span class="p">,</span> <span class="s1">&#39;www.example.org&#39;</span><span class="p">],</span>
-    <span class="n">BlockedIps</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;122.33.22.11&#39;</span><span class="p">],</span>
-    <span class="n">EnableCacheSlice</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneUS</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneEU</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneASIA</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneSA</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableGeoZoneAF</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">ZoneSecurityEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">ZoneSecurityIncludeHashRemoteIP</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">IgnoreQueryStrings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">MonthlyBandwidthLimit</span><span class="o">=</span><span class="mi">1073741824</span><span class="p">,</span>
-    <span class="n">AccessControlOriginHeaderExtensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">],</span>
-    <span class="n">EnableAccessControlOriginHeader</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">BlockRootPathAccess</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableWebpVary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableLogging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">DisableCookies</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">BudgetRedirectedCountries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;BR&#39;</span><span class="p">],</span>
-    <span class="n">BlockedCountries</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RU&#39;</span><span class="p">,</span> <span class="s1">&#39;BR&#39;</span><span class="p">],</span>
-    <span class="n">EnableOriginShield</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">OriginShieldZoneCode</span><span class="o">=</span><span class="s1">&#39;FR&#39;</span><span class="p">,</span>
-    <span class="n">AddCanonicalHeader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">CacheControlMaxAgeOverride</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">AddHostHeader</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AWSSigningEnabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">AWSSigningKey</span><span class="o">=</span><span class="s1">&#39;AK_EXAMPLEKEY&#39;</span><span class="p">,</span>
-    <span class="n">AWSSigningRegionName</span><span class="o">=</span><span class="s1">&#39;us-east-1&#39;</span><span class="p">,</span>
-    <span class="n">AWSSigningSecret</span><span class="o">=</span><span class="s1">&#39;SK_EXAMPLESECRETKET&#39;</span><span class="p">,</span>
-    <span class="n">EnableTLS1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">EnableTLS1_1</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="delete-pull-zone">
 <h2>Delete Pull Zone<a class="headerlink" href="#delete-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#From top-level</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">)</span>
-
-<span class="c1">#From Zone object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-</pre></div>
+<div class="section" id="id1">
+<h3>From Id<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.delete(id)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>From Zone Object<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">zone.delete()</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
 </div>
 </div>
 <div class="section" id="purge-file-from-pull-zone">
 <h2>Purge File From Pull Zone<a class="headerlink" href="#purge-file-from-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From top-level</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Purge</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://myzone.b-cdn.net/css/style.css&#39;</span><span class="p">)</span>
-
-<span class="c1"># From Zone Object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">purge_file</span><span class="p">(</span><span class="s1">&#39;css/style.css&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="section" id="id3">
+<h3>From Id<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Purge.create(url)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>From Zone Object<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">zone.purge_file(file_path)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
 </div>
 </div>
 <div class="section" id="purge-entire-pull-zone">
 <h2>Purge Entire Pull Zone<a class="headerlink" href="#purge-entire-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From top-level</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">purge</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span>
-<span class="p">)</span>
-<span class="c1"># From Zone object</span>
-<span class="n">zone</span><span class="o">.</span><span class="n">purge</span><span class="p">()</span>
-</pre></div>
+<div class="section" id="id5">
+<h3>From Id<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.purge(id)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>From Zone Object<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">zone.purge()</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
 </div>
 </div>
 <div class="section" id="add-edge-rule-to-pull-zone">
 <h2>Add Edge Rule to Pull Zone<a class="headerlink" href="#add-edge-rule-to-pull-zone" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_edge_rule</span><span class="p">(</span>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.create_edge_rule(id,</span> <span class="pre">**kwargs)</span></code></p></li>
+</ul>
+<p><em>TODO: Add description</em></p>
+<p>Optional Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Guid</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActionParameter1</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActionParameter2</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Enabled</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Description</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActionType</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TriggerMatchingType</span></code> <em>TODO: Add description</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Triggers</span></code> <em>TODO: Add description</em></p></li>
+</ul>
+<p>Usage example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_edge_rule</span><span class="p">(</span>
     <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;myzone&#39;</span><span class="p">,</span>
     <span class="n">Guid</span><span class="o">=</span><span class="s2">&quot;6a2e94df-8aa9-4cd2-b89d-16752102ef9f&quot;</span><span class="p">,</span> <span class="c1"># GUID of the edge rule</span>
     <span class="n">ActionParameter1</span> <span class="o">=</span> <span class="s2">&quot;My-Header&quot;</span><span class="p">,</span>
@@ -299,12 +393,18 @@
 </div>
 <div class="section" id="hostnames">
 <h2>Hostnames<a class="headerlink" href="#hostnames" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a hostname</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">create_hostname</span><span class="p">(</span><span class="s2">&quot;myHostname&quot;</span><span class="p">)</span>
-
-<span class="c1"># Delete a hostname</span>
-<span class="n">b</span><span class="o">.</span><span class="n">Zone</span><span class="o">.</span><span class="n">delete_hostname</span><span class="p">(</span><span class="s2">&quot;myHostname&quot;</span><span class="p">)</span>
-</pre></div>
+<p><em>TODO: Add description</em></p>
+<div class="section" id="create-a-hostname">
+<h3>Create a hostname<a class="headerlink" href="#create-a-hostname" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.create_hostname(hostname)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="delete-a-hostname">
+<h3>Delete a hostname<a class="headerlink" href="#delete-a-hostname" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Syntax: <code class="docutils literal notranslate"><span class="pre">b.Zone.delete_hostname(hostname)</span></code></p></li>
+</ul>
 </div>
 </div>
 </div>
@@ -314,6 +414,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Storage.html" class="btn btn-neutral float-right" title="Storage Zone" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
