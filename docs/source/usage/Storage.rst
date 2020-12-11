@@ -162,7 +162,7 @@ Storage JSON Files
 
 Create a json file
 ------------------
-* Syntax: ``b.Zone.delete(id)``
+* Syntax: ``zone.create_json(file_name,**kwargs)``
 
 *TODO: Add description*
 
@@ -174,7 +174,7 @@ Usage example::
 
 Get information from file
 -------------------------
-* Syntax: ``zone.delete()``
+* Syntax: ``file[key]``
 
 *TODO: Add description*
 
