@@ -81,8 +81,8 @@ class StorageZone(base.BaseStorageBunny):
     def head_file(self, file_path):
         return self.call_storage_api(f"/{self.Name}/{file_path}", "HEAD")
 
-    def upload_file(self, dest_path, file_name, local_path,compress=True):
-        if compress and BROTLI_ENABLED and file_name.endswith('.json'):
+    def upload_file(self, dest_path, file_name, local_path,use_brotli=False):
+        if use_brotli and BROTLI_ENABLED and file_name.endswith('.json'):
             with open(os.path.join(local_path, file_name)) as json_file:
                 data = json.load(json_file)
             data_str = json.dumps(data).encode('UTF-8')
@@ -98,8 +98,14 @@ class StorageZone(base.BaseStorageBunny):
     def create_file(self, file_name, content):
         pass
 
-    def create_json(self, key, data_dict):
-        f = BytesIO(json.dumps(data_dict).encode())
+    def create_json(self, key, data_dict, use_brotli=False):
+        data_json = json.dumps(data_dict).encode()
+
+        if use_brotli and BROTLI_ENABLED:
+            data_json= brotli.compress(data_json.encode('UTF-8'))
+            key += ".brotli"
+            
+        f = BytesIO(data_json)
         return self.call_storage_api(f"/{self.Name}/{key}", "PUT",
                                      data=f.read())
 
