@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Storage Zone &mdash; bunnyhop 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> bunnyhop
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Library Usage:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pullzone.html">Pull Zone</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bunnyhop</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Storage Zone</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Storage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="storage-zone">
+<h1>Storage Zone<a class="headerlink" href="#storage-zone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-storage-zone">
+<h2>Create Storage Zone<a class="headerlink" href="#create-storage-zone" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Storage Zone (available regions are listed below)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;example-a&#39;</span><span class="p">,</span> <span class="n">main_storage_region</span><span class="o">=</span><span class="s1">&#39;NY&#39;</span><span class="p">,</span> <span class="n">replica_regions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;SG&#39;</span><span class="p">,</span> <span class="s1">&#39;SYD&#39;</span><span class="p">])</span>
+<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="storage-regions">
+<h3>Storage Regions<a class="headerlink" href="#storage-regions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>DE - Europe (Falkenstein)</p></li>
+<li><p>NY - North America (New York)</p></li>
+<li><p>SG - Asia (Singapore)</p></li>
+<li><p>SYD - Oceania (Sydney)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="list-storage-zones">
+<h2>List Storage Zones<a class="headerlink" href="#list-storage-zones" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># Returns: [&lt;StorageZone: example-a (id: 1234)&gt;, &lt;StorageZone: example-b (id: 12345)&gt;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-storage-zone">
+<h2>Delete a Storage Zone<a class="headerlink" href="#delete-a-storage-zone" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="c1"># Returns: None</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-a-storage-zone">
+<h2>Get a Storage Zone<a class="headerlink" href="#get-a-storage-zone" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="storage-files">
+<h2>Storage Files<a class="headerlink" href="#storage-files" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a Storage Zone</span>
+<span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">StorageZone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="c1"># Returns: &lt;StorageZone: example-a (id: 1234)&gt;</span>
+
+<span class="c1"># Lists files in the zone</span>
+<span class="n">obj_list</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># Returns [&lt;StorageFile: index.html&gt;, &lt;StorageFile: base.css&gt;]</span>
+
+<span class="c1"># Get a file</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
+<span class="c1">#Returns &lt;StorageFile: index.html&gt;</span>
+
+<span class="c1"># Get a file as StorageObject</span>
+<span class="n">zone</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">Storage</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="c1"># Returns: &lt;StorageObject: example-a (id: 1234)&gt;</span>
+
+<span class="c1"># Download that File</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+
+<span class="c1"># Delete a file</span>
+<span class="n">zone</span><span class="o">.</span><span class="n">delete_file</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
+
+<span class="c1"># Upload a File</span>
+<span class="n">zone</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">dest_path</span><span class="o">=</span><span class="s1">&#39;folder/path/&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;error.html&#39;</span><span class="p">,</span> <span class="n">local_path</span><span class="o">=</span><span class="s1">&#39;/home/mj/work/&#39;</span><span class="p">)</span>
+<span class="c1"># Returns: &lt;StorageFile: error.html&gt;</span>
+
+<span class="c1"># Create a file from a string</span>
+<span class="n">zone</span><span class="o">.</span><span class="n">create_file</span><span class="p">(</span><span class="s1">&#39;base.css&#39;</span><span class="p">,</span> <span class="s2">&quot;body {background-color: powderblue;}&quot;</span><span class="p">)</span>
+<span class="c1"># Returns: &lt;StorageFile: base.css&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="storage-json-files">
+<h2>Storage JSON Files<a class="headerlink" href="#storage-json-files" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a json file</span>
+<span class="n">mj</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">create_json</span><span class="p">(</span><span class="s1">&#39;23.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="s1">&#39;Michael&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jordan&#39;</span><span class="p">})</span>
+<span class="c1"># Returns &lt;StorageJSONFile: 23.json&gt;</span>
+
+<span class="c1"># Get information from file</span>
+<span class="n">mj</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
+<span class="c1"># Returns: &#39;Michael&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Brian Jinwright
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
