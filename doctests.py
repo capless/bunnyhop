@@ -1,5 +1,7 @@
 import unittest
 from bunnyhop import Bunny
+import os
+import json
 
 class Test_GettingStarted(unittest.TestCase):
     def setUp(self):
@@ -48,8 +50,6 @@ class Test_GettingStarted(unittest.TestCase):
                 StorageZoneId=storageZoneId)
         testList = self.b.Zone.list()
         testId = testList[-1].Id
-        print(testList)
-        print(testId)
         
         # Assert
         testzone = self.b.Zone.get(id=testId)
@@ -58,6 +58,38 @@ class Test_GettingStarted(unittest.TestCase):
         self.assertEqual(testzone.OriginUrl, originUrl)
         self.assertEqual(testzone.StorageZoneId, storageZoneId)
         testzone.delete()
+
+    def test_UploadAndGetWithBrotli(self):
+        # Arrange
+        DEST_PATH = ""
+        FILE_NAME = "test123.json"
+        LOCAL_PATH = ""
+        storage = b.Storage.all()[0]
+
+        with open(os.path.join(LOCAL_PATH, FILE_NAME)) as json_file:
+                DATA = json_file
+
+        # Act
+        storage.upload_file(DEST_PATH,FILE_NAME,LOCAL_PATH,use_brotli=True)
+        result = storage.get("test123.brotli")
+        
+        # Assert
+        self.assertEqual(result, DATA)
+
+
+    def test_CreateJsonWithBrotli(self):
+        # Arrange
+        TEST_DICT= {"Hello":"World", "first-name":"Ronald", "last-name":"Mcdonald"}
+        KEY= "test"
+        storage = b.Storage.all()[0]
+
+        # Act
+        storage.create_json(KEY, TEST_DICT, use_brotli=True)
+        result = storage.get(f"{KEY}.brotli")
+        
+        # Assert
+        self.assertEqual(result, json.dumps(TEST_DICT))
+
 
 if __name__ == "__main__":
     unittest.main()
