@@ -64,7 +64,7 @@ class Test_GettingStarted(unittest.TestCase):
         DEST_PATH = ""
         FILE_NAME = "test123.json"
         LOCAL_PATH = ""
-        storage = b.Storage.all()[0]
+        storage = self.b.Storage.all()[0]
 
         with open(os.path.join(LOCAL_PATH, FILE_NAME)) as json_file:
                 DATA = json_file
@@ -81,7 +81,7 @@ class Test_GettingStarted(unittest.TestCase):
         # Arrange
         TEST_DICT= {"Hello":"World", "first-name":"Ronald", "last-name":"Mcdonald"}
         KEY= "test"
-        storage = b.Storage.all()[0]
+        storage = self.b.Storage.all()[0]
 
         # Act
         storage.create_json(KEY, TEST_DICT, use_brotli=True)
