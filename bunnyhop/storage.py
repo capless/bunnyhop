@@ -99,7 +99,7 @@ class StorageZone(base.BaseStorageBunny):
         pass
 
     def create_json(self, key, data_dict, use_brotli=False):
-        data_json = json.dumps(data_dict).encode()
+        data_json = json.dumps(data_dict)
 
         if use_brotli and BROTLI_ENABLED:
             data_json= brotli.compress(data_json.encode('UTF-8'))
