@@ -92,8 +92,11 @@ class StorageZone(base.BaseStorageBunny):
             compressed_file.write(compressed_data)
             compressed_file.close()
 
+        with open(os.path.join(local_path, file_name), 'rb') as output_file:
+            data = output_file.read()
+
         return self.call_storage_api(f"/{self.Name}/{dest_path}/{file_name}", "PUT",
-                                     data=open(os.path.join(local_path, file_name), 'rb').read())
+                                     data=data)
 
     def create_file(self, file_name, content):
         pass
