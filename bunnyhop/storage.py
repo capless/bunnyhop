@@ -6,6 +6,12 @@ from envs import env
 
 from bunnyhop import base
 
+try:
+    import brotli
+    BROTLI_ENABLED = True
+except ImportError:
+    BROTLI_ENABLED = False
+
 
 class Storage(base.BaseBunny):
 
@@ -20,7 +26,7 @@ class Storage(base.BaseBunny):
         if response.get('Id', None):
             return StorageZone(response.get('Password'), **response)            
         else: 
-            raise Exception(f"Error: {response.get('ErrorKey', None)} Message: {response.get('Message','')}")
+            raise ValueError(f"Error: {response.get('ErrorKey', None)} Message: {response.get('Message','')}")
 
     def all(self):
         return [StorageZone(i.get('Password'), **i) for i in
@@ -31,9 +37,11 @@ class Storage(base.BaseBunny):
 
     def get(self, id):
         response = self.call_api(f"/storagezone/{id}", "GET")
-        if response.get('Id', None):
-            return StorageZone(response.get('Password'), **response)
-        return response
+        try:
+            if response.get('Id', None):
+                return StorageZone(response.get('Password'), **response)
+        except:
+            return response
 
 
 class StorageZone(base.BaseStorageBunny):
@@ -51,7 +59,7 @@ class StorageZone(base.BaseStorageBunny):
     ReadOnlyPassword = base.CharProperty(required=False)
 
     def __str__(self):
-        return self.Name
+        return f"{self.Name} (id: {self.Id})"
 
     def all(self, folder=''):
         if not folder.endswith('/'):
@@ -61,27 +69,48 @@ class StorageZone(base.BaseStorageBunny):
     def get(self, file_path):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
         if isinstance(response,dict) and response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
+            raise ValueError(f"Error:{response.get('Message','')}")
+        if file_path.endswith('.brotli'):
+            response = brotli.decompress(response).decode('UTF-8')
         return response
 
     def get_object(self, file_path):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
         if isinstance(response,dict) and response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
+            raise ValueError(f"Error:{response.get('Message','')}")
         return [StorageObject(self.api_key, self, **i) for i in self.call_storage_api(f"/{self.Name}/", "GET") if file_path==i.get('ObjectName','') ][0]
 
     def head_file(self, file_path):
         return self.call_storage_api(f"/{self.Name}/{file_path}", "HEAD")
 
-    def upload_file(self, dest_path, file_name, local_path):
+    def upload_file(self, dest_path, file_name, local_path,use_brotli=False):
+        if use_brotli and BROTLI_ENABLED and file_name.endswith('.json'):
+            with open(os.path.join(local_path, file_name)) as json_file:
+                data = json.load(json_file)
+            data_str = json.dumps(data).encode('UTF-8')
+            compressed_data = brotli.compress(data_str)
+            file_name = os.path.splitext(file_name)[0]+".brotli"
+            compressed_file = open(os.path.join(local_path, file_name),"wb")
+            compressed_file.write(compressed_data)
+            compressed_file.close()
+
+        with open(os.path.join(local_path, file_name), 'rb') as output_file:
+            data = output_file.read()
+
         return self.call_storage_api(f"/{self.Name}/{dest_path}/{file_name}", "PUT",
-                                     data=open(local_path, 'rb').read())
+                                     data=data)
 
     def create_file(self, file_name, content):
         pass
 
-    def create_json(self, key, data_dict):
-        f = BytesIO(json.dumps(data_dict).encode())
+    def create_json(self, key, data_dict, use_brotli=False):
+        data_json = json.dumps(data_dict)
+
+        if use_brotli and BROTLI_ENABLED:
+            data_json= brotli.compress(data_json.encode('UTF-8'))
+            key += ".brotli"
+            
+        f = BytesIO(data_json)
         return self.call_storage_api(f"/{self.Name}/{key}", "PUT",
                                      data=f.read())
 
@@ -91,7 +120,7 @@ class StorageZone(base.BaseStorageBunny):
     def delete_file(self, file_path):
         response = self.call_storage_api(f"/{self.Name}/{file_path}", "DELETE")
         if response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
+            raise ValueError(f"Error:{response.get('Message','')}")
         return response
 
 

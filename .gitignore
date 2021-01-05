@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Custom ignore
+.vscode/
+poetry.lock
+*.ipynb
+
+#Sphinx docs
+docs/build/
