@@ -37,9 +37,11 @@ class Storage(base.BaseBunny):
 
     def get(self, id):
         response = self.call_api(f"/storagezone/{id}", "GET")
-        if response.get('Id', None):
-            return StorageZone(response.get('Password'), **response)
-        return response
+        try:
+            if response.get('Id', None):
+                return StorageZone(response.get('Password'), **response)
+        except:
+            return response
 
 
 class StorageZone(base.BaseStorageBunny):
