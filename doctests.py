@@ -11,7 +11,7 @@ def generate_random_string(k=8):
 
 class Test_GettingStarted(unittest.TestCase):
     def setUp(self):
-        API_KEY = '77b98183-3151-456a-9c9e-474b10b35916b966b022-1b65-4a36-b246-f0e3ce79525f'
+        API_KEY = '03a364a5-f9e0-4eb1-b124-5e665be4edc3a8fa433f-e896-4de6-bad6-05582aff37c0'
         b = Bunny(API_KEY)
         self.b = b
 
@@ -90,7 +90,7 @@ class Test_GettingStarted(unittest.TestCase):
         TEST_PULLZONE = TEST_PULLZONES[0]
 
         # Act
-        response = self.b.Storage.get(str(TEST_PULLZONE))
+        response = self.b.Zone.get(TEST_PULLZONE.Id)
         # Assert
         if type(response) is not dict:
             self.assertEqual(response.Id, TEST_PULLZONE.Id)
@@ -101,7 +101,7 @@ class Test_GettingStarted(unittest.TestCase):
         FILE_NAME = "test123.json"
         LOCAL_PATH = "test"
         TEST_STORAGE_ZONES = self.b.Storage.all()
-        TEST_STORAGE_ZONE_ID = TEST_STORAGE_ZONES[5].Id
+        TEST_STORAGE_ZONE_ID = TEST_STORAGE_ZONES[0].Id
         STORAGE = self.b.Storage.get(TEST_STORAGE_ZONE_ID)
 
         with open(os.path.join(LOCAL_PATH, FILE_NAME)) as json_file:
@@ -121,7 +121,7 @@ class Test_GettingStarted(unittest.TestCase):
                      "first-name": "Ronald", "last-name": "Mcdonald"}
         KEY = "test"
         TEST_STORAGE_ZONES = self.b.Storage.all()
-        TEST_STORAGE_ZONE_ID = TEST_STORAGE_ZONES[5].Id
+        TEST_STORAGE_ZONE_ID = TEST_STORAGE_ZONES[0].Id
         STORAGE = self.b.Storage.get(TEST_STORAGE_ZONE_ID)
 
         # Act
@@ -130,6 +130,34 @@ class Test_GettingStarted(unittest.TestCase):
 
         # Assert
         self.assertEqual(result, json.dumps(TEST_DICT))
+
+    def test_i_PurgeEntirePullzone(self):
+        # Arrange
+        TEST_PULLZONE = self.b.Zone.list()[0]
+        # Act
+        self.b.Zone.purge(TEST_PULLZONE.Id)
+        TEST_PULLZONE.purge(TEST_PULLZONE.Id)
+        # Assert
+
+    def test_j_DeleteAPullZone(self):
+        # Arrange
+        TEST_PULLZONES = self.b.Zone.list()
+        TEST_PULLZONE = TEST_PULLZONES[0]
+
+        # Act
+        response = self.b.Zone.get(str(TEST_PULLZONE.Id))
+        self.b.Zone.delete(str(TEST_PULLZONE.Id))
+        # Assert
+        self.assertEqual(self.b.Zone.get(str(TEST_PULLZONE.Id)), "Zone not found.")
+
+    def test_k_DeleteStorageZone(self):
+        # Arrange
+        TEST_STORAGEZONES = self.b.Storage.all()
+        TEST_STORAGEZONE = TEST_STORAGEZONES[0]
+        # Act
+        response = self.b.Storage.delete(TEST_STORAGEZONE.Id)
+        # Assert
+        self.assertEqual(self.b.Storage.get(TEST_STORAGEZONE.Id), b"")
 
 
 if __name__ == "__main__":
