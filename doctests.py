@@ -5,9 +5,11 @@ import json
 import random
 import string
 
+
 def generate_random_string(k=8):
     return ''.join(random.choices(
-            string.ascii_lowercase + string.digits, k=k))
+        string.ascii_lowercase + string.digits, k=k))
+
 
 class Test_GettingStarted(unittest.TestCase):
     def setUp(self):
@@ -63,7 +65,6 @@ class Test_GettingStarted(unittest.TestCase):
             Type=TEST_TYPE,  # 0 = Standard and 1 = High Volume
             OriginUrl=ORIGIN_URL,
             StorageZoneId=STORAGEZONE_ID)
-        
 
         # Assert
         testzone = self.b.Zone.get(id=response.Id)
@@ -105,15 +106,15 @@ class Test_GettingStarted(unittest.TestCase):
         STORAGE = self.b.Storage.get(TEST_STORAGE_ZONE_ID)
 
         with open(os.path.join(LOCAL_PATH, FILE_NAME)) as json_file:
-                DATA = json.dumps(json.loads(json_file.read())) 
+            DATA = json.dumps(json.loads(json_file.read()))
 
         # Act
-        response = STORAGE.upload_file(DEST_PATH, FILE_NAME, LOCAL_PATH, use_brotli=True)
+        response = STORAGE.upload_file(
+            DEST_PATH, FILE_NAME, LOCAL_PATH, use_brotli=True)
         result = STORAGE.get(f"{DEST_PATH}/test123.brotli")
 
         # Assert
         self.assertEqual(result, DATA)
-
 
     def test_h_CreateJsonWithBrotli(self):
         # Arrange
@@ -148,7 +149,8 @@ class Test_GettingStarted(unittest.TestCase):
         response = self.b.Zone.get(str(TEST_PULLZONE.Id))
         self.b.Zone.delete(str(TEST_PULLZONE.Id))
         # Assert
-        self.assertEqual(self.b.Zone.get(str(TEST_PULLZONE.Id)), "Zone not found.")
+        self.assertEqual(self.b.Zone.get(
+            str(TEST_PULLZONE.Id)), "Zone not found.")
 
     def test_k_DeleteStorageZone(self):
         # Arrange
