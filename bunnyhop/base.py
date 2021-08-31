@@ -79,3 +79,13 @@ class BaseStorageBunny(BaseBunny):
             return requests.put(self.get_url(api_url, endpoint_url), headers=header, files=files)
         return self.call_api(api_url, api_method, header=header, params={}, data=data, json_data=json_data,
                              endpoint_url=endpoint_url)
+
+
+class BaseStreamBunny(BaseBunny):
+    """
+    NOTE: The API key for Stream API is different from the bunny.net account API key
+    Docs:
+    https://docs.bunny.net/reference/api-overview
+    """
+
+    stream_endpoint_url = env('BUNNYCDN_STREAM_API_ENDPOINT', 'video.bunnycdn.com')
