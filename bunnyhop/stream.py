@@ -8,35 +8,82 @@ from bunnyhop import base
 
 
 class StreamCollection(base.BaseStreamBunny):
+    videoLibraryId = base.IntegerProperty()
+    guid = base.CharProperty()
+    name = base.CharProperty()
+    videoCount = base.IntegerProperty()
+    totalSize = base.IntegerProperty()
+    previewVideoIds = base.CharProperty()
 
-    def create(self, name):
+    def create(self, library_id, name):
         """ Creates a collection in Stream API
-        POST -> /library/{libraryId}/collections
 
         Payload
         -------
+        library_id: int, required
+            library id can be found in bunnynet site and navigating through API setting
         name: str, required
             name of the new collection for Stream API
+
+        Returns
+        -------
+        response: dict, required
+            {
+                "videoLibraryId": int,
+                "guid": str,
+                "name": str,
+                "videoCount": int,
+                "totalSize": int,
+                "previewVideoIds": str
+            }
         """
-        pass
+        METHOD = 'POST'
+        PATH = f'/library/{library_id}/collections'
+        response = self.call_api(
+            api_url=PATH,
+            api_method=METHOD,
+            json_data={'name': name}
+        )
+
+        if response.get('guid', None):
+            return StreamCollection(self.api_key, **response)
+        return response
 
     def get(self, library_id, collection_id):
         """ Acquires a single collection in Stream API
-        GET -> /library/{libraryId}/collections/{collectionId}
 
         Payload
         -------
         library_id: int, required
         collection_id: str, required
+            guid of a collection which can be acquired by 'all()'
 
         Returns
         -------
+        response: dict, required
+            {
+                "videoLibraryId": int,
+                "guid": str,
+                "name": str,
+                "videoCount": int,
+                "totalSize": int,
+                "previewVideoIds": str
+            }
         """
-        pass
+        METHOD = 'GET'
+        PATH = f'/library/{library_id}/collections/{collection_id}'
+        response = self.call_api(
+            api_url=PATH,
+            api_method=METHOD,
+        )
+        try:
+            if response.get('guid', None):
+                return StreamCollection(self.api_key, **response)
+        except:
+            return "Stream Collection not found."
 
     def all(self, library_id, page=1, items_per_page=10, search="", orderBy="date"):
         """ Acquires a list of all collections
-        GET -> /library/{library_id}/collections
 
         Payload
         -------
@@ -50,38 +97,94 @@ class StreamCollection(base.BaseStreamBunny):
 
         Returns
         -------
+        response: dict, required
+            200: { 
+                totalItems: int,
+                currentPage: int,
+                itemsPerPage: int,
+                items: arr, dict
+                    {
+                        "videoLibraryId": int,
+                        "guid": str
+                        "name": str
+                        "videoCount": int
+                        "totalSize": int
+                        "previewVideoIds": str
+                    }
+            }
         """
-        pass
+        METHOD = 'GET'
+        PATH = F'/library/{library_id}/collections'
+        response = self.call_api(
+            api_url=PATH,
+            api_method=METHOD,
+            params={
+                'page': page,
+                'itemsPerPage': items_per_page,
+                'search': search,
+                'orderBy': orderBy
+            }
+        )
 
-    def update(self, library_id, collection_id):
+        return response
+
+    def update(self, library_id, collection_id, name):
         """ Updates a collection
-        POST -> /library/{libraryId}/collections/{collectionId}
-
+        
         Payload
         -------
         library_id: int, required
         collection_id: str, required
+        name: str, required
+            updated name of the collection
 
         Returns
         -------
-
+        response: dict, required
+            {
+                "success": bool,
+                "message": str,
+                "statusCode": int
+            }
         """
-        pass
+        METHOD = 'POST'
+        PATH = f'/library/{library_id}/collections/{collection_id}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+            json_data={
+                'name': name
+            }
+        )
+
+        return response
 
     def delete(self, library_id, collection_id):
         """ Deletes a collection
-        DELETE -> /library/{libraryId}/collections/{collectionId}
 
         Payload
         -------
         library_id: int, required
         collection_id: str, required
+            guid of the collection
 
         Returns
         -------
-
+        response: dict, required
+            {
+                "success": bool,
+                "message": str,
+                "statusCode": int
+            }
         """
-        pass
+        METHOD = 'DELETE'
+        PATH = F'/library/{library_id}/collections/{collection_id}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+        )
+
+        return response
 
 
 class Stream(base.BaseStreamBunny):
