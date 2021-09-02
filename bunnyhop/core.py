@@ -3,6 +3,7 @@ from bunnyhop.purge import Purge
 from bunnyhop.stats import Stats
 from bunnyhop.storage import Storage, StorageZone
 from bunnyhop.zone import Zone
+from bunnyhop.stream import StreamCollection, Stream
 
 
 class Bunny(object):
@@ -14,3 +15,11 @@ class Bunny(object):
         self.StorageZone = StorageZone(api_key)
         self.Stats = Stats(api_key)
         self.Billing = Billing(api_key)
+
+
+class BunnyStream(object):
+    """  """
+
+    def __init__(self, api_key):
+        self.StreamCollection = StreamCollection(api_key)
+        self.Purge = Stream(api_key)
