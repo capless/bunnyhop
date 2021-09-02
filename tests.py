@@ -1,4 +1,5 @@
 import argparse
+from bunnyhop.core import BunnyStream
 import unittest
 from envs import env
 from bunnyhop import Bunny
@@ -7,6 +8,7 @@ BUNNYCDN_API_KEY = env('BUNNYCDN_API_KEY')
 BUNNYCDN_TEST_STORAGE_ZONE = env('BUNNYCDN_TEST_STORAGE_ZONE')
 BUNNYCDN_TEST_STORAGE_ZONE_NAME = env('BUNNYCDN_TEST_STORAGE_ZONE_NAME')
 BUNNYCDN_TEST_PULL_ZONE = env('BUNNYCDN_TEST_PULL_ZONE')
+BUNNYCDN_STREAM_API_KEY = env('BUNNY_STREAM_API_KEY')
 
 
 class TestBilling(unittest.TestCase):
@@ -111,6 +113,41 @@ class TestZone(unittest.TestCase):
     def test_purge(self):
         response = self.b.Zone.purge('test')
         self.assertEqual(response['Message'], 'The request is invalid.')
+
+
+class TestStreamCollection(unittest.TestCase):
+    
+    @classmethod
+    def setUpClass(cls):
+        cls.b = BunnyStream(BUNNYCDN_STREAM_API_KEY)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.b = None
+
+    def test_create(self):
+        response = self.b.StreamCollection.create('test')
+        expected =  {
+                "videoLibraryId": int,
+                "guid": str,
+                "name": str,
+                "videoCount": int,
+                "totalSize": int,
+                "previewVideoIds": str
+            }
+        self.assertEqual('')
+
+    def test_get(self):
+        response = self.b.StreamCollection.get()
+
+    def test_list(self):
+        response = self.b.StreamCollection.all()
+
+    def test_update(self):
+        response = self.b.StreamCollection.update()
+
+    def test_delete(self):
+        response = self.b.StreamCollection.delete()
 
 
 def parse_args():
