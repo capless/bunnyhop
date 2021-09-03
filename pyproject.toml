@@ -8,6 +8,7 @@ readme = "README.md"
 homepage = "https://github.com/capless/bunnyhop"
 repository = "https://github.com/capless/bunnyhop"
 exclude = [".env"]
+keywords = ["bunnycdn json db"]
 classifiers = [
     "Python",
     "Python :: 3.6", 
