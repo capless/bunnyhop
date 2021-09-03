@@ -121,12 +121,16 @@ class TestStreamCollection(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.b = BunnyStream(BUNNYCDN_STREAM_API_KEY)
-        cls.test_collection = cls.b.StreamCollection.create(BUNNYCDN_STREAM_API_KEY, 'unittest')
+        cls.test_coll = cls.b.StreamCollection.create(BUNNYCDN_STREAM_LIBRARY_KEY, 'unittest')
+        cls.test_delete_coll = cls.b.StreamCollection.create(BUNNYCDN_STREAM_LIBRARY_KEY, 'to-delete-unittest')
 
     @classmethod
     def tearDownClass(cls):
-        cls.b = None
+        collections = cls.b.StreamCollection.all().get('items')
+        generated_by_tests = [collection.get('guid') for collection in collections if collection.get('name') == 'unittest-bunnyhop'][0]
         cls.test_collection.delete()
+        cls.b.StreamCollection.delete(generated_by_tests)
+        cls.b = None
 
     def test_create(self):
         name = 'unittest-bunnyhop'
@@ -135,7 +139,7 @@ class TestStreamCollection(unittest.TestCase):
 
     def test_get(self):
         name = 'unittest'
-        response = self.b.StreamCollection.get(name)
+        response = self.b.StreamCollection.get(self.test_coll.guid)
         self.assertEqual(response.get('name'), name)
 
     def test_list(self):
@@ -144,11 +148,12 @@ class TestStreamCollection(unittest.TestCase):
 
     def test_update(self):
         updated_name = 'updated-unittest-bunnyhop'
-        response = self.b.StreamCollection.update(updated_name)
-        self.assertEqual(response.get())
+        response = self.test_coll.update(updated_name)
+        self.assertTrue(response.get('success'))
 
     def test_delete(self):
-        response = self.b.StreamCollection.delete('')
+        response = self.b.StreamCollection.delete(self.test_delete_coll.guid)
+        self.assertTrue(response.get('success'))
 
 
 def parse_args():
