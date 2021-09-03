@@ -15,13 +15,11 @@ class StreamCollection(base.BaseStreamBunny):
     totalSize = base.IntegerProperty()
     previewVideoIds = base.CharProperty()
 
-    def create(self, library_id, name):
+    def create(self, name):
         """ Creates a collection in Stream API
 
         Payload
         -------
-        library_id: int, required
-            library id can be found in bunnynet site and navigating through API setting
         name: str, required
             name of the new collection for Stream API
 
@@ -38,7 +36,7 @@ class StreamCollection(base.BaseStreamBunny):
             }
         """
         METHOD = 'POST'
-        PATH = f'/library/{library_id}/collections'
+        PATH = f'/library/{self.library_id}/collections'
         response = self.call_api(
             api_url=PATH,
             api_method=METHOD,
@@ -46,15 +44,15 @@ class StreamCollection(base.BaseStreamBunny):
         )
 
         if response.get('guid', None):
-            return StreamCollection(self.api_key, **response)
+            return StreamCollection(
+                api_key=self.api_key, library_id=self.library_id, **response)
         return response
 
-    def get(self, library_id, collection_id):
+    def get(self, collection_id):
         """ Acquires a single collection in Stream API
 
         Payload
         -------
-        library_id: int, required
         collection_id: str, required
             guid of a collection which can be acquired by 'all()'
 
@@ -71,23 +69,25 @@ class StreamCollection(base.BaseStreamBunny):
             }
         """
         METHOD = 'GET'
-        PATH = f'/library/{library_id}/collections/{collection_id}'
+        PATH = f'/library/{self.library_id}/collections/{collection_id}'
         response = self.call_api(
             api_url=PATH,
             api_method=METHOD,
         )
         try:
             if response.get('guid', None):
-                return StreamCollection(self.api_key, **response)
-        except:
-            return "Stream Collection not found."
+                return StreamCollection(
+                    api_key=self.api_key, library_id=self.library_id, **response)
+            else:
+                return "Stream Collection not found."
+        except Exception as err:
+            return str(err)
 
-    def all(self, library_id, page=1, items_per_page=10, search="", orderBy="date"):
+    def all(self, page=1, items_per_page=10, search="", orderBy="date"):
         """ Acquires a list of all collections
 
         Payload
         -------
-        library_id: int, required
         page: int, optional, default: 1
         items_per_page: int, optional, default: 10
         search: str, optional
@@ -114,7 +114,7 @@ class StreamCollection(base.BaseStreamBunny):
             }
         """
         METHOD = 'GET'
-        PATH = F'/library/{library_id}/collections'
+        PATH = f'/library/{self.library_id}/collections'
         response = self.call_api(
             api_url=PATH,
             api_method=METHOD,
@@ -128,15 +128,14 @@ class StreamCollection(base.BaseStreamBunny):
 
         return response
 
-    def update(self, library_id, collection_id, name):
+    def update(self, name, collection_id=None):
         """ Updates a collection
         
         Payload
         -------
-        library_id: int, required
-        collection_id: str, required
         name: str, required
             updated name of the collection
+        collection_id: str, required, default=self.guid
 
         Returns
         -------
@@ -147,8 +146,10 @@ class StreamCollection(base.BaseStreamBunny):
                 "statusCode": int
             }
         """
+        if not collection_id:
+            collection_id = self.guid
         METHOD = 'POST'
-        PATH = f'/library/{library_id}/collections/{collection_id}'
+        PATH = f'/library/{self.library_id}/collections/{collection_id}'
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,
@@ -159,13 +160,12 @@ class StreamCollection(base.BaseStreamBunny):
 
         return response
 
-    def delete(self, library_id, collection_id):
+    def delete(self, collection_id=None):
         """ Deletes a collection
 
         Payload
         -------
-        library_id: int, required
-        collection_id: str, required
+        collection_id: str, optional, default=self.guid
             guid of the collection
 
         Returns
@@ -177,8 +177,10 @@ class StreamCollection(base.BaseStreamBunny):
                 "statusCode": int
             }
         """
+        if not collection_id:
+            collection_id = self.guid
         METHOD = 'DELETE'
-        PATH = F'/library/{library_id}/collections/{collection_id}'
+        PATH = F'/library/{self.library_id}/collections/{collection_id}'
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,

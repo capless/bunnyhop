@@ -22,9 +22,9 @@ class BaseBunny(Schema):
             self.endpoint_url = endpoint_url
         super().__init__(**kwargs)
 
-    def __repr__(self):
-        return '<{class_name}: {uni} >'.format(
-            class_name=self.__class__.__name__, uni=self.__str__())
+    # def __repr__(self):
+    #     return '<{class_name}: {uni} >'.format(
+    #         class_name=self.__class__.__name__, uni=self.__str__())
 
     def get_header(self):
         header = {
@@ -88,4 +88,8 @@ class BaseStreamBunny(BaseBunny):
     https://docs.bunny.net/reference/api-overview
     """
 
-    stream_endpoint_url = env('BUNNYCDN_STREAM_API_ENDPOINT', 'video.bunnycdn.com')
+    endpoint_url = env('BUNNYCDN_STREAM_API_ENDPOINT', 'https://video.bunnycdn.com')
+
+    def __init__(self, api_key, library_id=None, endpoint_url=None, **kwargs):
+        self.library_id = library_id
+        super().__init__(api_key=api_key, endpoint_url=endpoint_url, **kwargs)

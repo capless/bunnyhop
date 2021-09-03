@@ -9,6 +9,7 @@ BUNNYCDN_TEST_STORAGE_ZONE = env('BUNNYCDN_TEST_STORAGE_ZONE')
 BUNNYCDN_TEST_STORAGE_ZONE_NAME = env('BUNNYCDN_TEST_STORAGE_ZONE_NAME')
 BUNNYCDN_TEST_PULL_ZONE = env('BUNNYCDN_TEST_PULL_ZONE')
 BUNNYCDN_STREAM_API_KEY = env('BUNNY_STREAM_API_KEY')
+BUNNYCDN_STREAM_LIBRARY_KEY = env('BUNNYCDN_STREAM_LIBRARY_KEY')
 
 
 class TestBilling(unittest.TestCase):
@@ -120,34 +121,34 @@ class TestStreamCollection(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.b = BunnyStream(BUNNYCDN_STREAM_API_KEY)
+        cls.test_collection = cls.b.StreamCollection.create(BUNNYCDN_STREAM_API_KEY, 'unittest')
 
     @classmethod
     def tearDownClass(cls):
         cls.b = None
+        cls.test_collection.delete()
 
     def test_create(self):
-        response = self.b.StreamCollection.create('test')
-        expected =  {
-                "videoLibraryId": int,
-                "guid": str,
-                "name": str,
-                "videoCount": int,
-                "totalSize": int,
-                "previewVideoIds": str
-            }
-        self.assertEqual('')
+        name = 'unittest-bunnyhop'
+        response = self.b.StreamCollection.create(name)
+        self.assertEqual(response.get('name'), name)
 
     def test_get(self):
-        response = self.b.StreamCollection.get()
+        name = 'unittest'
+        response = self.b.StreamCollection.get(name)
+        self.assertEqual(response.get('name'), name)
 
     def test_list(self):
         response = self.b.StreamCollection.all()
+        self.assertEqual(response.get('currentPage'), 1)
 
     def test_update(self):
-        response = self.b.StreamCollection.update()
+        updated_name = 'updated-unittest-bunnyhop'
+        response = self.b.StreamCollection.update(updated_name)
+        self.assertEqual(response.get())
 
     def test_delete(self):
-        response = self.b.StreamCollection.delete()
+        response = self.b.StreamCollection.delete('')
 
 
 def parse_args():

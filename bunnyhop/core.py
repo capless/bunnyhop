@@ -20,6 +20,6 @@ class Bunny(object):
 class BunnyStream(object):
     """  """
 
-    def __init__(self, api_key):
-        self.StreamCollection = StreamCollection(api_key)
-        self.Purge = Stream(api_key)
+    def __init__(self, api_key, library_id):
+        self.StreamCollection = StreamCollection(api_key, library_id)
+        self.Stream = Stream(api_key, library_id)

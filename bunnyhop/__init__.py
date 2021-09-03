@@ -1,1 +1,1 @@
-from .core import Bunny
+from .core import Bunny, BunnyStream
