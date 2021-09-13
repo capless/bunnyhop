@@ -189,16 +189,14 @@ class StreamCollection(base.BaseStreamBunny):
         return response
 
 
-class Stream(base.BaseStreamBunny):
+class Video(base.BaseStreamBunny):
 
-    def create(self, library_id, title, collection_id):
+    def create(self, title, collection_id):
         """ Creates a video in Stream API
             NOTE: Must be done before using 'upload()'
-        POST -> /library/{library_id}/videos
 
         Payload
         -------
-        library_id: int, required
         title: str, required
             title of the video
         collection_id: str, required
@@ -209,30 +207,52 @@ class Stream(base.BaseStreamBunny):
         status_code:
             200: 'The video was successfuly created and returned as the response.'
         """
-        pass
+        METHOD = 'POST'
+        PATH = F'/library/{self.library_id}/videos'
 
-    def get(self, library_id, video_id):
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+        )
+
+        if response.get('guid', None):
+            return Video(
+                api_key=self.api_key, library_id=self.library_id, **response)
+        return response
+
+    def get(self, video_id):
         """ Acquires a video  
-        GET -> /library/{libraryId}/videos/{videoId}
 
         Payload
         -------
-        library_id: int, required
         video_id, str, required
 
         Returns
         -------
 
         """
-        pass
+        METHOD = 'GET'
+        PATH = F'/library/{self.library_id}/videos/{video_id}'
 
-    def all(self, library_id, page=1, items_per_page=10, search="", orderBy="date"):
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+        )
+
+        try:
+            if response.get('guid', None):
+                return Video(
+                    api_key=self.api_key, library_id=self.library_id, **response)
+            else:
+                return "Stream Collection not found."
+        except Exception as err:
+            return str(err)
+
+    def all(self, page=1, items_per_page=10, search="", orderBy="date"):
         """ Lists all of video 
-        GET -> /library/{libraryId}/videos
-        
+
         Payload
         -------
-        library_id: int, required
         page: int, optional, default: 1
         items_per_page: int, optional, default: 10
         search: str, optional
@@ -245,15 +265,27 @@ class Stream(base.BaseStreamBunny):
         Returns
         -------
         """
-        pass
+        METHOD = 'GET'
+        PATH = f'/library/{self.library_id}/videos'
+        response = self.call_api(
+            api_url=PATH,
+            api_method=METHOD,
+            params={
+                'page': page,
+                'itemsPerPage': items_per_page,
+                'search': search,
+                'orderBy': orderBy
+            }
+        )
 
-    def fetch(self, library_id, video_id, url, headers={}):
+        return response
+
+    def fetch(self, video_id, url, headers={}):
         """ Fetches a video 
         POST -> /library/{libraryId}/videos/{videoId}/fetch
 
         Payload
         -------
-        library_id: int, required
         video_id: str, required
         url: str, required
             URL where the video will be fetched
@@ -265,13 +297,11 @@ class Stream(base.BaseStreamBunny):
         """
         pass
 
-    def update(self, library_id, video_id, title, collection_id):
-        """ Updates a video 
-        POST -> /library/{libraryId}/videos/{videoId}
+    def update(self, video_id, title, collection_id):
+        """ Updates a video
 
         Payload
         -------
-        library_id: int, required
         video_id: str, required
         title: str, required
             The title of the video
@@ -282,15 +312,26 @@ class Stream(base.BaseStreamBunny):
         -------
 
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'POST'
+        PATH = f'/library/{self.library_id}/videos/{video_id}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+            json_data={
+                'title': title,
+                'collection_id': collection_id
+            }
+        )
 
-    def delete(self, library_id, video_id):
+        return response
+
+    def delete(self, video_id):
         """ Deletes a video
-        DELETE -> /library/{libraryId}/videos/{videoId}
 
         Payload
         -------
-        library_id: int, required
         video_id: int, required
 
         Returns
@@ -298,24 +339,41 @@ class Stream(base.BaseStreamBunny):
 
 
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'DELETE'
+        PATH = F'/library/{self.library_id}/videos/{video_id}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+        )
 
-    def upload(self, library_id, video_id):
+        return response
+
+    def upload(self,  video_id):
         """ Uploads a video
             NOTE: Requires you to create the video first via
             the API Create Video endpoint 'create()'
 
         Payload
         -------
-        library_id: int, required
         video_id: int, required
             the video_id created through 'Create Video` endpoint
-        
+
         Returns
         -------
 
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'PUT'
+        PATH = F'/library/{self.library_id}/videos/{video_id}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+        )
+
+        return response
 
     def create_and_upload(self):
         """ Utilizes BunnyNet's `Create` and `Upload` video to
@@ -323,27 +381,38 @@ class Stream(base.BaseStreamBunny):
         """
         pass
 
-    def set_thumbnail(self):
+    def set_thumbnail(self, video_id, thumbnail_url):
         """ Sets a thumbnail for a specific video
-        POST -> /library/libraryId/videos/videoId/thumbnail
 
         Payload
         -------
-        library_id: int, required
         video_id: str, required
+        thumbnail_url: str, required
+            url of the thumbnail for the video
 
         Returns
         -------
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'POST'
+        PATH = f'/library/{self.library_id}/videos/{video_id}/thumbnail'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+            params={
+                'thumbnailUrl': thumbnail_url
+            }
+        )
 
-    def add_caption(self):
+        return response
+
+    def add_caption(self, video_id, srclang, label, captions_file):
         """ Adds caption to a video 
         POST -> /library/libraryId/videos/videoId/captions/srclang
 
         Payload
         -------
-        library_id: int, required
         video_id: str, required
         srclang: str, required
         label: str, required
@@ -354,15 +423,28 @@ class Stream(base.BaseStreamBunny):
         Returns
         -------
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'POST'
+        PATH = F'/library/{self.library_id}/videos/{video_id}/captions/{srclang}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+            json_data={
+                'srclang': srclang,
+                'label': label,
+                'captionsFile': captions_file
+            }
+        )
 
-    def delete_caption(self):
+        return response
+
+    def delete_caption(self, video_id, srclang):
         """ Delete captions in a video 
         DELETE -> /library/libraryId/videos/videoId/captions/srclang
 
         Payload
         -------
-        library_id: int, required
         video_id: str, required
         srclang: str, required
 
@@ -370,9 +452,13 @@ class Stream(base.BaseStreamBunny):
         -------
 
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'DELETE'
+        PATH = F'/library/{self.library_id}/videos/{video_id}/captions/{srclang}'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH
+        )
 
-
-# TODO: Create a 'Video' object that houses video endpoints (thumbnail, upload, caption)
-class Video(object):
-    pass
+        return response
