@@ -89,7 +89,7 @@ class StreamCollection(base.BaseStreamBunny):
         Payload
         -------
         page: int, optional, default: 1
-        items_per_page: int, optional, default: 10
+        items_per_page: int, optional, default: 10, minimum: 10
         search: str, optional
             search using the given param in the list of collection
         orderBy: str, optional, default: 'date'
@@ -190,6 +190,25 @@ class StreamCollection(base.BaseStreamBunny):
 
 
 class Video(base.BaseStreamBunny):
+    videoLibraryId = base.IntegerProperty()
+    guid = base.CharProperty()
+    title = base.CharProperty()
+    dateUploaded = base.CharProperty()
+    views = base.IntegerProperty()
+    isPublic = base.BooleanProperty()
+    length = base.IntegerProperty()
+    status = base.IntegerProperty()
+    framerate = base.IntegerProperty()
+    width = base.IntegerProperty()
+    height = base.IntegerProperty()
+    availableResolutions = base.CharProperty()
+    thumbnailCount = base.IntegerProperty()
+    encodeProgress = base.IntegerProperty()
+    storageSize = base.IntegerProperty()
+    captions = base.ListProperty()
+    hasMP4Fallback = base.BooleanProperty()
+    collectionId = base.CharProperty()
+    thumbnailFileName = base.CharProperty()
 
     def create(self, title, collection_id):
         """ Creates a video in Stream API
@@ -254,7 +273,7 @@ class Video(base.BaseStreamBunny):
         Payload
         -------
         page: int, optional, default: 1
-        items_per_page: int, optional, default: 10
+        items_per_page: int, optional, default: 10, minimum: 10
         search: str, optional
             search using the given param in the list of collection
         collection: str, optional

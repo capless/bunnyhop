@@ -3,7 +3,7 @@ from bunnyhop.purge import Purge
 from bunnyhop.stats import Stats
 from bunnyhop.storage import Storage, StorageZone
 from bunnyhop.zone import Zone
-from bunnyhop.stream import StreamCollection, Stream
+from bunnyhop.stream import StreamCollection, Video
 
 
 class Bunny(object):
@@ -22,4 +22,4 @@ class BunnyStream(object):
 
     def __init__(self, api_key, library_id):
         self.StreamCollection = StreamCollection(api_key, library_id)
-        self.Stream = Stream(api_key, library_id)
+        self.Video = Video(api_key, library_id)
