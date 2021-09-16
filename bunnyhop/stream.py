@@ -232,6 +232,10 @@ class Video(base.BaseStreamBunny):
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,
+            json_data={
+                'title': title,
+                'collection_id': collection_id
+            }
         )
 
         if response.get('guid', None):
@@ -299,9 +303,8 @@ class Video(base.BaseStreamBunny):
 
         return response
 
-    def fetch(self, video_id, url, headers={}):
+    def fetch(self, url, headers={}, video_id=None):
         """ Fetches a video 
-        POST -> /library/{libraryId}/videos/{videoId}/fetch
 
         Payload
         -------
@@ -314,18 +317,31 @@ class Video(base.BaseStreamBunny):
         -------
 
         """
-        pass
+        if not video_id:
+            video_id = self.guid
+        METHOD = 'POST'
+        PATH = f'/library/{self.library_id}/videos/{video_id}/fetch'
+        response = self.call_api(
+            api_method=METHOD,
+            api_url=PATH,
+            json_data={
+                'url': url,
+                'headers': headers
+            }
+        )
 
-    def update(self, video_id, title, collection_id):
+        return response
+
+    def update(self, title, collection_id, video_id=None):
         """ Updates a video
 
         Payload
         -------
-        video_id: str, required
         title: str, required
             The title of the video
         collection_id: str, required
             ID of the collection where the video belongs
+        video_id: str, required
 
         Returns
         -------
@@ -346,7 +362,7 @@ class Video(base.BaseStreamBunny):
 
         return response
 
-    def delete(self, video_id):
+    def delete(self, video_id=None):
         """ Deletes a video
 
         Payload
@@ -369,13 +385,15 @@ class Video(base.BaseStreamBunny):
 
         return response
 
-    def upload(self,  video_id):
+    def upload(self, file, video_id=None):
         """ Uploads a video
             NOTE: Requires you to create the video first via
             the API Create Video endpoint 'create()'
 
         Payload
         -------
+        file: required
+            the video to upload
         video_id: int, required
             the video_id created through 'Create Video` endpoint
 
@@ -390,6 +408,7 @@ class Video(base.BaseStreamBunny):
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,
+            data=file
         )
 
         return response
@@ -400,7 +419,7 @@ class Video(base.BaseStreamBunny):
         """
         pass
 
-    def set_thumbnail(self, video_id, thumbnail_url):
+    def set_thumbnail(self, thumbnail_url, video_id=None):
         """ Sets a thumbnail for a specific video
 
         Payload
@@ -426,9 +445,8 @@ class Video(base.BaseStreamBunny):
 
         return response
 
-    def add_caption(self, video_id, srclang, label, captions_file):
-        """ Adds caption to a video 
-        POST -> /library/libraryId/videos/videoId/captions/srclang
+    def add_caption(self, srclang, label, captions_file, video_id=None):
+        """ Adds caption to a video
 
         Payload
         -------
@@ -458,9 +476,8 @@ class Video(base.BaseStreamBunny):
 
         return response
 
-    def delete_caption(self, video_id, srclang):
-        """ Delete captions in a video 
-        DELETE -> /library/libraryId/videos/videoId/captions/srclang
+    def delete_caption(self, srclang, video_id=None):
+        """ Delete captions in a video
 
         Payload
         -------
