@@ -1,8 +1,4 @@
-import json
-import os
 from io import BytesIO
-
-from envs import env
 
 from bunnyhop import base
 
@@ -98,7 +94,7 @@ class StreamCollection(base.BaseStreamBunny):
         Returns
         -------
         response: dict, required
-            200: { 
+            200: {
                 totalItems: int,
                 currentPage: int,
                 itemsPerPage: int,
@@ -130,7 +126,7 @@ class StreamCollection(base.BaseStreamBunny):
 
     def update(self, name, collection_id=None):
         """ Updates a collection
-        
+
         Payload
         -------
         name: str, required
@@ -244,7 +240,7 @@ class Video(base.BaseStreamBunny):
         return response
 
     def get(self, video_id):
-        """ Acquires a video  
+        """ Acquires a video
 
         Payload
         -------
@@ -272,7 +268,7 @@ class Video(base.BaseStreamBunny):
             return str(err)
 
     def all(self, page=1, items_per_page=10, search="", orderBy="date"):
-        """ Lists all of video 
+        """ Lists all of video
 
         Payload
         -------
@@ -304,7 +300,9 @@ class Video(base.BaseStreamBunny):
         return response
 
     def fetch(self, url, headers={}, video_id=None):
-        """ Fetches a video 
+        """ Fetches a video from the URL that was given
+            and uploads it to the video that was 
+            was specified using `video_id`
 
         Payload
         -------
