@@ -8,8 +8,10 @@ services:
       context: .
     expose:
       - "8017"
+      - "8080"
     ports:
       - 8017:8888
+      - 8080:8080
     volumes:
       - ./:/code/
     env_file: .env
