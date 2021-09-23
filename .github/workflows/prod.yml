@@ -17,25 +17,25 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    
-      - run: docker-compose pull
-      # In this step, this action saves a list of existing images,
-      # the cache is created without them in the post run.
-      # It also restores the cache if it exists.
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        # Ignore the failure of a step and avoid terminating the job.
-        continue-on-error: true
-      - run: docker-compose build
+  
+    - run: docker-compose pull
+    # In this step, this action saves a list of existing images,
+    # the cache is created without them in the post run.
+    # It also restores the cache if it exists.
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
+    - run: docker-compose build
 
-      - name: Run Unit Tests
-        run: docker-compose run web poetry run python -m unittest
+    - name: Run Unit Tests
+      run: docker-compose run web poetry run python -m unittest
 
-      - name: Publish to PyPi
-        if: github.ref == 'refs/heads/master'
-        run: docker-compose run web poetry build && docker-compose run web poetry publish --username=${{ secrets.PYPI_USERNAME }} --password=${{ secrets.PYPI_PASSWORD }}
+    - name: Publish to PyPi
+      if: github.ref == 'refs/heads/master'
+      run: docker-compose run web poetry build && docker-compose run web poetry publish --username=${{ secrets.PYPI_USERNAME }} --password=${{ secrets.PYPI_PASSWORD }}
 
-      - name: Create pdoc
-        run: docker-compose run web poetry run python -m pdoc -o ./docs bunnyhop
+    - name: Create pdoc
+      run: docker-compose run web poetry run python -m pdoc -o ./docs bunnyhop
 
       # - name: Upload docs to S3
       #   run: 
