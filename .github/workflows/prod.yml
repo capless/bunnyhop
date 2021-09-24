@@ -37,5 +37,20 @@ jobs:
     - name: Create pdoc
       run: docker-compose run web poetry run python -m pdoc -o ./docs bunnyhop
 
-      # - name: Upload docs to S3
-      #   run: 
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: ${{ secrets.AWS_BUCKET }}
+        source_dir: 'docs'
+
+    - name: Update deployment status (success)
+      if: success()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        target_url: https://${{ secrets.AWS_BUCKET }}.s3-website-us-east-1.amazonaws.com/${{steps.S3.outputs.object_key}}/index.html
+        state: 'success'
+        deployment_id: ${{ steps.test.outputs.deployment_id }}
