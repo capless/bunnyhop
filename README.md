@@ -158,6 +158,7 @@ b.Zone.create_edge_rule(
     Triggers = []
 )
 ```
+<hr/>
 ## Storage
 
 ### Storage Zones
@@ -238,6 +239,7 @@ mj['first_name']
 # Returns: 'Michael'
 ```
 
+<hr/>
 # Purge
 
 ## Create a Purge
@@ -246,11 +248,13 @@ mj['first_name']
 b.Purge.create(url='https://myzone.b-cdn.net/style.css')
 ```
 
+<hr/>
 # Stats
 
 ```python
 b.Stats.get(dateFrom='2018-12-01', dateTo='2020-01-01', pullZone='example-zone', serverZoneId='serverZoneID')
 ```
+<hr/>
 # Billing
 
 #### Get Billing Summary
@@ -262,4 +266,193 @@ b.Billing.get()
 
 ```python
 b.Billing.applycode(couponCode='somecode123')
+```
+
+<hr/>
+
+# Bunny Stream
+
+1. Acquire first your BunnyNet Stream API key. This Stream API key is different from your own API key.
+2. Create a Video Library in your Bunny console and acquire its Library ID by `navigating to it > API > Video Library ID`
+3. Initialize BunnyStream yung the two keys you have.
+
+
+```python
+from bunnyhop import BunnyStream
+from envs import env
+import os
+
+
+BUNNYCDN_STREAM_API_KEY = '<STREAM_API_KEY>'
+BUNNYCDN_STREAM_LIBRARY_KEY = '<LIBRARY_KEY>'
+
+
+b = BunnyStream(
+    api_key=BUNNYCDN_STREAM_API_KEY,
+    library_id=BUNNYCDN_STREAM_LIBRARY_KEY
+)
+```
+
+
+# StreamCollection
+A `Collection` that can be created in a Bunny's video library.
+
+
+## List Collection
+Lists all of collections available in the given library ID
+
+
+```python
+b.StreamCollection.all(items_per_page=9)
+```
+
+
+
+## Create Collection
+Create a collection. Returns a `StreamCollection` object which you can perform the same operations if you want to not specify the ID
+
+
+```python
+stream_col = b.StreamCollection.create('test')
+stream_col.guid
+```
+
+
+
+## Get a Collection
+Acquires a collection based on the GUID you gave. This returns a `StreamCollection` object.
+
+
+```python
+stream_col = b.StreamCollection.get('6d1089a9-0764-4580-a5c9-e26a98fa7812')
+```
+
+
+## Update a Collection
+Updates a `StreamCollection` object if it has properties but if not, GUID is required.
+
+
+```python
+stream_col.update('updated')
+```
+
+
+## Delete a Collection
+Deletes a collection based on a GUID you provided. If the object is a `StreamCollection` property, it will delete itself if you didn't specified a GUID.
+
+
+```python
+stream_col.delete()
+```
+
+
+
+# Video
+A `Video` that can be created and then uploaded to a collection or just a library.
+
+## Create a Video
+Create a `Video` object in Bunny API. 
+
+**This is required before running `upload()`**
+
+
+```python
+vid = b.Video.create(title='new_video', collection_id='6d1089a9-0764-4580-a5c9-e26a98fa7812')
+```
+
+
+## Upload a Video
+Uploads the Video to Bunny. **`create()` is required before uploading**. If the object is a `Video`-class it will upload itself. Otherwise, provide the GUID of the created video.
+
+
+```python
+import requests
+
+mp4_file = requests.get('https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4')
+vid.upload(mp4_file.content)
+# with open(mp4_file, 'rb') as file:
+#     vid.upload(file)
+```
+
+
+## Get a Video
+Acquires a `Video` based on the given GUID.
+
+
+```python
+vid = b.Video.get('fde3acc9-7139-403a-a514-781151e57841')
+```
+
+
+## Fetch a Video
+Uploads a video to the specified `video_id` from the URL that was given. Requires `create()` to be called first and use its provided `video_id`
+
+
+```python
+b.Video.fetch(
+    url='https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
+    headers={},
+    video_id='5a32233f-b1fd-41f7-ae41-c49ed714fc67')
+```
+
+
+## List videos
+Acquires the list of the videos that are in the current library. 
+
+**Notes**
+
+- The minimum `itemsPerPage` is 10, anything below that will be ignored.
+
+
+```python
+b.Video.all(items_per_page=1)
+```
+
+## Update a Video
+Update a `Video`'s title and collection it belongs. If the object is a `Video` class, it will update itself without needing to provide GUID.
+
+
+```python
+vid.update('updatedTitle', '6d1089a9-0764-4580-a5c9-e26a98fa7812')
+```
+
+
+## Delete a Video
+Deletes a `Video` based on its GUID. If the object is an `Video` class, it will delete itself.
+
+
+```python
+vid.delete()
+```
+
+
+## Set Video's thumbnail
+Set a `Video`'s thumbnail with the specified image's URL
+
+
+```python
+vid.set_thumbnail(thumbnail_url='https://dummyimage.com/600x400/000/fff.jpg')
+```
+
+
+## Add Captions
+
+
+```python
+import base64
+import requests
+
+cc_file = requests.get('https://raw.githubusercontent.com/andreyvit/subtitle-tools/master/sample.srt')
+cc_to_upload = base64.b64encode(cc_file.content)
+
+print(cc_to_upload)
+vid.add_caption(srclang='en', label='test_label', captions_file=cc_to_upload)
+```
+
+
+## Delete Captions
+
+
+```python
+vid.delete_caption('en')
 ```
