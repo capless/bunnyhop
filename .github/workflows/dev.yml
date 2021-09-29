@@ -11,8 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: docker-compose pull
     - run: touch .env
+    - run: docker-compose pull
     # In this step, this action saves a list of existing images,
     # the cache is created without them in the post run.
     # It also restores the cache if it exists.
