@@ -17,7 +17,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-  
     - run: docker-compose pull
     # In this step, this action saves a list of existing images,
     # the cache is created without them in the post run.
