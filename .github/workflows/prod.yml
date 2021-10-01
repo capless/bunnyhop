@@ -1,0 +1,55 @@
+name: Python application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - run: docker-compose pull
+    # In this step, this action saves a list of existing images,
+    # the cache is created without them in the post run.
+    # It also restores the cache if it exists.
+    - uses: satackey/action-docker-layer-caching@v0.0.11
+      # Ignore the failure of a step and avoid terminating the job.
+      continue-on-error: true
+    - run: docker-compose build
+
+    - name: Run Unit Tests
+      run: docker-compose run web poetry run python -m unittest
+
+    - name: Publish to PyPi
+      if: github.ref == 'refs/heads/master'
+      run: docker-compose run web poetry build && docker-compose run web poetry publish --username=${{ secrets.PYPI_USERNAME }} --password=${{ secrets.PYPI_PASSWORD }}
+
+    - name: Create pdoc
+      run: docker-compose run web poetry run python -m pdoc -o ./docs bunnyhop
+
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: ${{ secrets.AWS_BUCKET }}
+        source_dir: 'docs'
+
+    - name: Update deployment status (success)
+      if: success()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        target_url: https://${{ secrets.AWS_BUCKET }}.s3-website-us-east-1.amazonaws.com/${{steps.S3.outputs.object_key}}/index.html
+        state: 'success'
+        deployment_id: ${{ steps.test.outputs.deployment_id }}
