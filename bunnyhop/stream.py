@@ -1,4 +1,6 @@
 from io import BytesIO
+from hashlib import sha256
+from tusclient import client
 
 from bunnyhop import base
 
@@ -496,3 +498,52 @@ class Video(base.BaseStreamBunny):
         )
 
         return response
+
+
+class TUSUpload(base.BaseStreamBunny):
+    """ Uses Bunnynet resumable uploads """
+    videoLibraryId = base.IntegerProperty()
+    videoId = base.IntegerProperty()
+
+    endpoint_url = 'https://video.bunnycdn.com/tusupload'
+    authorization_expire = 86400
+    client = client.TusClient(endpoint_url, 
+        headers={
+            'AuthorizationSignature': '',
+            'AuthorizationExpire': 99,
+            'VideoId': '',
+            'LibraryId': videoLibraryId
+        })  
+
+    def generate_presigned_req_sig(self, exp_time=None, library_id=None, video_id=None):
+        if not library_id:
+            library_id = self.videoLibraryId
+        if not exp_time:
+            exp_time = self.authorization_expire
+        return sha256(library_id + self.api_key + exp_time + video_id)
+
+    def upload_file(self, file, chunk=None, stop_at_chunk=None):
+        """ Uploads the file via TUS protocol 
+        
+        Args:
+            file (string/bytes, required):
+                the dir of the file that needs uploading or the file stream
+            chunk (int, optional):
+                specify how large the chunk size in uploading
+            stop_at_chunk (int, optional):
+                stop uploading when total chunk uploaded reaches this number
+        Returns:
+
+        """
+        c = self.client
+        u = c.uploader(file_stream=file, chunk_size=200)
+
+        # TODO: Determine how resumable feature work
+        # NOTE: there must be something that acquires URL and see if there is something that is currently uploading
+        if chunk:
+            u.chunk_size = chunk
+            u.upload()
+        elif stop_at_chunk:
+            u.upload(stop_at_chunk=stop_at_chunk)
+        else:
+            u.upload()
