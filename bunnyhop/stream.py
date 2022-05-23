@@ -506,16 +506,31 @@ class TUSUpload(base.BaseStreamBunny):
     videoId = base.IntegerProperty()
 
     endpoint_url = 'https://video.bunnycdn.com/tusupload'
-    authorization_expire = 86400
-    client = client.TusClient(endpoint_url, 
-        headers={
-            'AuthorizationSignature': '',
-            'AuthorizationExpire': 99,
-            'VideoId': '',
-            'LibraryId': videoLibraryId
-        })  
+    authorization_expire = 3600
+    client = client.TusClient(endpoint_url,
+                              headers={
+                                  'AuthorizationSignature': '',
+                                  'AuthorizationExpire': 99,
+                                  'VideoId': '',
+                                  'LibraryId': videoLibraryId
+                              })
 
     def generate_presigned_req_sig(self, exp_time=None, library_id=None, video_id=None):
+        """ Generates presigned URL to put in headers of the TUS upload 
+        
+        Payload
+        -------
+        exp_time: seconds in int, optional
+            expiration time of the presigned URL, default is 3600s (60m)
+        library_id: int, optional
+            video library ID to store the video to upload
+        video_id: int, optional
+            ID of the video obj created in bunnynet
+
+        Returns
+        -------
+            A presigned URL to use in TUS upload headers - `AuthorizationSignature`
+        """
         if not library_id:
             library_id = self.videoLibraryId
         if not exp_time:
@@ -524,17 +539,21 @@ class TUSUpload(base.BaseStreamBunny):
 
     def upload_file(self, file, chunk=None, stop_at_chunk=None):
         """ Uploads the file via TUS protocol 
-        
-        Args:
-            file (string/bytes, required):
-                the dir of the file that needs uploading or the file stream
-            chunk (int, optional):
-                specify how large the chunk size in uploading
-            stop_at_chunk (int, optional):
-                stop uploading when total chunk uploaded reaches this number
-        Returns:
+
+        Payload
+        -------
+        file: string/bytes, required
+            the dir of the file that needs uploading or the file stream
+        chunk: int, optional
+            specify how large the chunk size in uploading
+        stop_at_chunk: int, optional
+            stop uploading when total chunk uploaded reaches this number
+    
+        Returns
+        -------
 
         """
+        # TODO: create a `Video` obj first in bunnynet API to get a video ID
         c = self.client
         u = c.uploader(file_stream=file, chunk_size=200)
 
