@@ -208,9 +208,12 @@ class Video(base.BaseStreamBunny):
     collectionId = base.CharProperty()
     thumbnailFileName = base.CharProperty()
 
+    tus_endpoint = 'https://video.bunnycdn.com/tusupload'
+    tus_auth_exp = 3600
+
     def create(self, title, collection_id):
         """ Creates a video in Stream API
-            NOTE: Must be done before using 'upload()'
+            NOTE: Must be done before using 'upload()' or 'tus_upload()'
 
         Payload
         -------
@@ -225,7 +228,7 @@ class Video(base.BaseStreamBunny):
             200: 'The video was successfuly created and returned as the response.'
         """
         METHOD = 'POST'
-        PATH = F'/library/{self.library_id}/videos'
+        PATH = f'/library/{self.library_id}/videos'
 
         response = self.call_api(
             api_method=METHOD,
@@ -377,7 +380,7 @@ class Video(base.BaseStreamBunny):
         if not video_id:
             video_id = self.guid
         METHOD = 'DELETE'
-        PATH = F'/library/{self.library_id}/videos/{video_id}'
+        PATH = f'/library/{self.library_id}/videos/{video_id}'
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,
@@ -404,7 +407,7 @@ class Video(base.BaseStreamBunny):
         if not video_id:
             video_id = self.guid
         METHOD = 'PUT'
-        PATH = F'/library/{self.library_id}/videos/{video_id}'
+        PATH = f'/library/{self.library_id}/videos/{video_id}'
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,
@@ -463,7 +466,7 @@ class Video(base.BaseStreamBunny):
         if not video_id:
             video_id = self.guid
         METHOD = 'POST'
-        PATH = F'/library/{self.library_id}/videos/{video_id}/captions/{srclang}'
+        PATH = f'/library/{self.library_id}/videos/{video_id}/captions/{srclang}'
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH,
@@ -491,29 +494,13 @@ class Video(base.BaseStreamBunny):
         if not video_id:
             video_id = self.guid
         METHOD = 'DELETE'
-        PATH = F'/library/{self.library_id}/videos/{video_id}/captions/{srclang}'
+        PATH = f'/library/{self.library_id}/videos/{video_id}/captions/{srclang}'
         response = self.call_api(
             api_method=METHOD,
             api_url=PATH
         )
 
         return response
-
-
-class TUSUpload(base.BaseStreamBunny):
-    """ Uses Bunnynet resumable uploads """
-    videoLibraryId = base.IntegerProperty()
-    videoId = base.IntegerProperty()
-
-    endpoint_url = 'https://video.bunnycdn.com/tusupload'
-    authorization_expire = 3600
-    client = client.TusClient(endpoint_url,
-                              headers={
-                                  'AuthorizationSignature': '',
-                                  'AuthorizationExpire': 99,
-                                  'VideoId': '',
-                                  'LibraryId': videoLibraryId
-                              })
 
     def generate_presigned_req_sig(self, exp_time=None, library_id=None, video_id=None):
         """ Generates presigned URL to put in headers of the TUS upload 
@@ -531,13 +518,16 @@ class TUSUpload(base.BaseStreamBunny):
         -------
             A presigned URL to use in TUS upload headers - `AuthorizationSignature`
         """
+        # BUG: TypeError: unsupported operand type(s) for +: 'int' and 'str'
         if not library_id:
             library_id = self.videoLibraryId
         if not exp_time:
             exp_time = self.authorization_expire
+        if not video_id:
+            video_id = self.guid
         return sha256(library_id + self.api_key + exp_time + video_id)
 
-    def upload_file(self, file, chunk=None, stop_at_chunk=None):
+    def tus_upload(self, file, chunk=None, stop_at_chunk=None):
         """ Uploads the file via TUS protocol 
 
         Payload
@@ -553,16 +543,24 @@ class TUSUpload(base.BaseStreamBunny):
         -------
 
         """
-        # TODO: create a `Video` obj first in bunnynet API to get a video ID
-        c = self.client
+        if not self.guid:
+            return '`Video` obj not yet created. Use `create()` method first then use this.'
+        c = client.TusClient(self.tus_endpoint,
+                             headers={
+                                 'AuthorizationSignature': self.generate_presigned_req_sig(),
+                                 'AuthorizationExpire': self.tus_auth_exp,
+                                 'VideoId': self.guid,
+                                 'LibraryId': self.videoLibraryId
+                             })
         u = c.uploader(file_stream=file, chunk_size=200)
 
         # TODO: Determine how resumable feature work
+        # GUESS: resumable uploads might work by iterating through chunks and when it gets interrupted, it will just stop and then resume when `upload()` is called again
         # NOTE: there must be something that acquires URL and see if there is something that is currently uploading
         if chunk:
             u.chunk_size = chunk
-            u.upload()
+            return u.upload()
         elif stop_at_chunk:
-            u.upload(stop_at_chunk=stop_at_chunk)
+            return u.upload(stop_at_chunk=stop_at_chunk)
         else:
-            u.upload()
+            return u.upload()
