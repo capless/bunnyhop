@@ -554,13 +554,14 @@ class Video(base.BaseStreamBunny):
                                  'LibraryId': str(self.videoLibraryId)
                              })
         
+        # BUG: TusCommunicationError: Attempt to retrieve create file url with status 401
         if file:
             u = c.uploader(file, chunk_size=200)
         elif file_stream:
             u = c.uploader(file_stream=file_stream, chunk_size=200)
         else:
             return 'No file to upload!'
-        # TODO: Determine how resumable feature work
+
         # GUESS: resumable uploads might work by iterating through chunks and when it gets interrupted, it will just stop and then resume when `upload()` is called again
         # NOTE: there must be something that acquires URL and see if there is something that is currently uploading
         if chunk:
