@@ -518,22 +518,23 @@ class Video(base.BaseStreamBunny):
         -------
             A presigned URL to use in TUS upload headers - `AuthorizationSignature`
         """
-        # BUG: TypeError: unsupported operand type(s) for +: 'int' and 'str'
         if not library_id:
             library_id = self.videoLibraryId
         if not exp_time:
             exp_time = self.authorization_expire
         if not video_id:
             video_id = self.guid
-        return sha256(library_id + self.api_key + exp_time + video_id)
+        return sha256((str(library_id) + self.api_key + str(exp_time) + video_id).encode()).hexdigest()
 
-    def tus_upload(self, file, chunk=None, stop_at_chunk=None):
+    def tus_upload(self, file=None, file_stream=None, chunk=None, stop_at_chunk=None):
         """ Uploads the file via TUS protocol 
 
         Payload
         -------
-        file: string/bytes, required
+        file: string, required if file_stream is empty
             the dir of the file that needs uploading or the file stream
+        file_stream: string/bytes, required if file is empty
+            the stream of the file that needs uploading or the file stream
         chunk: int, optional
             specify how large the chunk size in uploading
         stop_at_chunk: int, optional
@@ -543,17 +544,22 @@ class Video(base.BaseStreamBunny):
         -------
 
         """
-        if not self.guid:
+        if not self.guid: 
             return '`Video` obj not yet created. Use `create()` method first then use this.'
         c = client.TusClient(self.tus_endpoint,
                              headers={
                                  'AuthorizationSignature': self.generate_presigned_req_sig(),
-                                 'AuthorizationExpire': self.tus_auth_exp,
+                                 'AuthorizationExpire': str(self.tus_auth_exp),
                                  'VideoId': self.guid,
-                                 'LibraryId': self.videoLibraryId
+                                 'LibraryId': str(self.videoLibraryId)
                              })
-        u = c.uploader(file_stream=file, chunk_size=200)
-
+        
+        if file:
+            u = c.uploader(file, chunk_size=200)
+        elif file_stream:
+            u = c.uploader(file_stream=file_stream, chunk_size=200)
+        else:
+            return 'No file to upload!'
         # TODO: Determine how resumable feature work
         # GUESS: resumable uploads might work by iterating through chunks and when it gets interrupted, it will just stop and then resume when `upload()` is called again
         # NOTE: there must be something that acquires URL and see if there is something that is currently uploading
