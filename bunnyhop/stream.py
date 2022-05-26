@@ -1,3 +1,4 @@
+import time
 from io import BytesIO
 from hashlib import sha256
 from tusclient import client
@@ -209,7 +210,6 @@ class Video(base.BaseStreamBunny):
     thumbnailFileName = base.CharProperty()
 
     tus_endpoint = 'https://video.bunnycdn.com/tusupload'
-    tus_auth_exp = 3600
 
     def create(self, title, collection_id):
         """ Creates a video in Stream API
@@ -502,13 +502,23 @@ class Video(base.BaseStreamBunny):
 
         return response
 
-    def generate_presigned_req_sig(self, exp_time=None, library_id=None, video_id=None):
+    def generate_timestamp(self, exp_in_hours: int):
+        """ Returns a UNIX timestamp with added hours 
+        
+        Payload
+        -------
+        exp_in_hours: hours in int, required
+            the number of hours to add from the current timestamp
+        """
+        return int(time.time() + (exp_in_hours * 60 * 60))
+
+    def generate_presigned_req_sig(self, exp_time, library_id=None, video_id=None):
         """ Generates presigned URL to put in headers of the TUS upload 
         
         Payload
         -------
-        exp_time: seconds in int, optional
-            expiration time of the presigned URL, default is 3600s (60m)
+        exp_time: UNIX Timstamp, required
+            expiration time of the presigned URL
         library_id: int, optional
             video library ID to store the video to upload
         video_id: int, optional
@@ -520,11 +530,11 @@ class Video(base.BaseStreamBunny):
         """
         if not library_id:
             library_id = self.videoLibraryId
-        if not exp_time:
-            exp_time = self.authorization_expire
         if not video_id:
+            if not self.videoLibraryId or not self.guid:
+                return 'Invalid videoId or videoLibraryId. Use `create()` first before calling this method'
             video_id = self.guid
-        return sha256((str(library_id) + self.api_key + str(exp_time) + video_id).encode()).hexdigest()
+        return sha256((str(library_id) + self.api_key + str(exp_time) + video_id).encode('ascii')).hexdigest()
 
     def tus_upload(self, file=None, file_stream=None, chunk=None, stop_at_chunk=None):
         """ Uploads the file via TUS protocol 
@@ -544,17 +554,17 @@ class Video(base.BaseStreamBunny):
         -------
 
         """
-        if not self.guid: 
+        if not self.guid:
             return '`Video` obj not yet created. Use `create()` method first then use this.'
+        exp_timestamp = self.generate_timestamp(1)
         c = client.TusClient(self.tus_endpoint,
                              headers={
-                                 'AuthorizationSignature': self.generate_presigned_req_sig(),
-                                 'AuthorizationExpire': str(self.tus_auth_exp),
+                                 'AuthorizationSignature': self.generate_presigned_req_sig(exp_timestamp),
+                                 'AuthorizationExpire': str(exp_timestamp),
                                  'VideoId': self.guid,
                                  'LibraryId': str(self.videoLibraryId)
                              })
-        
-        # BUG: TusCommunicationError: Attempt to retrieve create file url with status 401
+
         if file:
             u = c.uploader(file, chunk_size=200)
         elif file_stream:
@@ -562,8 +572,6 @@ class Video(base.BaseStreamBunny):
         else:
             return 'No file to upload!'
 
-        # GUESS: resumable uploads might work by iterating through chunks and when it gets interrupted, it will just stop and then resume when `upload()` is called again
-        # NOTE: there must be something that acquires URL and see if there is something that is currently uploading
         if chunk:
             u.chunk_size = chunk
             return u.upload()
