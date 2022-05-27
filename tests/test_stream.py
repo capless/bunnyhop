@@ -1,12 +1,15 @@
-import argparse
-from bunnyhop.core import BunnyStream
-import unittest
-from unittest import mock
-from envs import env
-from bunnyhop import Bunny, BunnyStream
+import time
 import base64
+import argparse
+import unittest
+from envs import env
+from unittest import mock
+from hashlib import sha256
 
-BUNNYCDN_STREAM_API_KEY = env('BUNNY_STREAM_API_KEY')
+from bunnyhop.core import BunnyStream
+from bunnyhop import Bunny, BunnyStream
+
+BUNNYCDN_STREAM_API_KEY = env('BUNNYCDN_STREAM_API_KEY')
 BUNNYCDN_STREAM_LIBRARY_KEY = env('BUNNYCDN_STREAM_LIBRARY_KEY')
 
 
@@ -214,7 +217,8 @@ class TestVideo(unittest.TestCase):
         label = 'test'
         video_id = '0000'
         cc_to_upload = base64.b64encode('1. A captions file'.encode('ascii'))
-        response = self.b.Video.add_caption(srclang, label, cc_to_upload, video_id)
+        response = self.b.Video.add_caption(
+            srclang, label, cc_to_upload, video_id)
         self.assertTrue(response.get('success'))
 
     def test_delete_captions(self):
@@ -226,3 +230,14 @@ class TestVideo(unittest.TestCase):
         video_id = '0000'
         response = self.b.Video.delete_caption(srclang, video_id)
         self.assertTrue(response.get('success'))
+
+    def test_presigned_sig(self):
+        video_id = '0000'
+        lib_id = '100'
+        ts = int(time.time() + (1 * 60 * 60))
+        api_key = BUNNYCDN_STREAM_API_KEY
+        response = self.b.Video.generate_presigned_req_sig(
+            ts, lib_id, video_id, api_key)
+        expected = sha256(
+            (str(lib_id) + api_key + str(ts) + video_id).encode('ascii')).hexdigest()
+        self.assertTrue(response == expected)

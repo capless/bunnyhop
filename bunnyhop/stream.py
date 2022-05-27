@@ -512,7 +512,7 @@ class Video(base.BaseStreamBunny):
         """
         return int(time.time() + (exp_in_hours * 60 * 60))
 
-    def generate_presigned_req_sig(self, exp_time, library_id=None, video_id=None):
+    def generate_presigned_req_sig(self, exp_time, library_id=None, video_id=None, api_key=None):
         """ Generates presigned URL to put in headers of the TUS upload 
         
         Payload
@@ -523,6 +523,8 @@ class Video(base.BaseStreamBunny):
             video library ID to store the video to upload
         video_id: int, optional
             ID of the video obj created in bunnynet
+        api_key: str, optional
+            Stream API key to provide to method. Providing this will override current API Key
 
         Returns
         -------
@@ -534,7 +536,9 @@ class Video(base.BaseStreamBunny):
             if not self.videoLibraryId or not self.guid:
                 return 'Invalid videoId or videoLibraryId. Use `create()` first before calling this method'
             video_id = self.guid
-        return sha256((str(library_id) + self.api_key + str(exp_time) + video_id).encode('ascii')).hexdigest()
+        if not api_key:
+            api_key = self.api_key
+        return sha256((str(library_id) + api_key + str(exp_time) + video_id).encode('ascii')).hexdigest()
 
     def tus_upload(self, file=None, file_stream=None, chunk=None, stop_at_chunk=None):
         """ Uploads the file via TUS protocol 
@@ -556,7 +560,7 @@ class Video(base.BaseStreamBunny):
         """
         if not self.guid:
             return '`Video` obj not yet created. Use `create()` method first then use this.'
-        exp_timestamp = self.generate_timestamp(1)
+        exp_timestamp = self.generate_timestamp(exp_in_hours=1)
         c = client.TusClient(self.tus_endpoint,
                              headers={
                                  'AuthorizationSignature': self.generate_presigned_req_sig(exp_timestamp),
@@ -566,9 +570,9 @@ class Video(base.BaseStreamBunny):
                              })
 
         if file:
-            u = c.uploader(file, chunk_size=200)
+            u = c.uploader(file)
         elif file_stream:
-            u = c.uploader(file_stream=file_stream, chunk_size=200)
+            u = c.uploader(file_stream=file_stream)
         else:
             return 'No file to upload!'
 
