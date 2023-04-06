@@ -1,135 +1,119 @@
-import json
-import os
-from io import BytesIO
-
-from envs import env
-
-from bunnyhop import base
+import requests
 
 
-class Storage(base.BaseBunny):
+class File:
+    """
+    Represents a file in a BunnyCDN storage zone.
+    {'Guid': 'f33f3c52-1899-412b-8ac3-ae4b09edeb09', 'StorageZoneName': 'test-storage-qwigo-a', 'Path': '/test-storage-qwigo-a/', 'ObjectName': 'pfunk-screenshot-2.png', 'Length': 141610, 'LastChanged': '2023-03-30T21:50:15.582', 'ServerId': 426, 'ArrayNumber': 0, 'IsDirectory': False, 'UserId': '82dde7ba-797c-47e0-bbba-28c7243741d8', 'ContentType': '', 'DateCreated': '2023-03-30T21:50:15.582', 'StorageZoneId': 255866, 'Checksum': '6B402E879C5EE7A6B3C818372E61D3B4B8103A4D4B7F4CE7DD8AB4395EE0BE43', 'ReplicatedZones': 'LA,SE,DE,UK,SYD,BR,SG,JH'}
+    """
 
-    def create(self, name, main_storage_region: str = None, replica_regions: list = None):
-        api_data = {
-            'Name': name,
-            'Region': main_storage_region,
-            'ReplicationRegions': replica_regions
-        }
+    def __init__(self, Guid: str = "", StorageZoneName: str = "", Path: str = "", ObjectName: str = "", Length: int = 0,
+                 LastChanged: str = "", ServerId: int = 0, ArrayNumber: int = 0, IsDirectory: bool = False,
+                 UserId: str = "", ContentType: str = "", DateCreated: str = "", StorageZoneId: int = 0,
+                 Checksum: str = "", ReplicatedZones: str = "", access_key: str = "", storage_zone_name: str = "",
+                 region: str = ""):
+        self.name = StorageZoneName
+        self.path = Path
+        self.is_dir = IsDirectory
+        self.length = Length
+        self.last_changed = LastChanged
+        self.server_id = ServerId
+        self.array_number = ArrayNumber
+        self.user_id = UserId
+        self.content_type = ContentType
+        self.date_created = DateCreated
+        self.storage_zone_id = StorageZoneId
+        self.checksum = Checksum
+        self.replicated_zones = ReplicatedZones
+        self.guid = Guid
+        self.object_name = ObjectName
+        self.access_key = access_key
+        self.storage_zone_name = storage_zone_name
+        self.region = region
 
-        response = self.call_api(f"/storagezone", "POST", json_data=api_data)
-        if response.get('Id', None):
-            return StorageZone(response.get('Password'), **response)            
-        else: 
-            raise Exception(f"Error: {response.get('ErrorKey', None)} Message: {response.get('Message','')}")
+    def download(self, dest_path: str) -> bool:
+        """
+        Download the file to the specified destination path.
 
-    def all(self):
-        return [StorageZone(i.get('Password'), **i) for i in
-                self.call_api(f"/storagezone", "GET")]
+        :param dest_path: The path to save the downloaded file.
+        :return: True if the file was downloaded successfully, False otherwise.
+        """
+        url = self._get_url()
+        response = requests.get(url, headers={"AccessKey": self.access_key})
 
-    def delete(self, id):
-        return self.call_api(f"/storagezone/{id}", "DELETE")
+        if response.status_code != 200:
+            raise Exception(response.content)
 
-    def get(self, id):
-        response = self.call_api(f"/storagezone/{id}", "GET")
-        if response.get('Id', None):
-            return StorageZone(response.get('Password'), **response)
-        return response
+        with open(dest_path, "wb+") as file:
+            file.write(response.content)
 
+        return True
 
-class StorageZone(base.BaseStorageBunny):
-    Id = base.IntegerProperty()
-    UserId = base.CharProperty()
-    Name = base.CharProperty()
-    Password = base.CharProperty()
-    DateModified = base.DateTimeProperty(required=False)
-    Deleted = base.BooleanProperty(default_value=False)
-    StorageUsed = base.IntegerProperty(required=False)
-    FilesStored = base.IntegerProperty(required=False)
-    Region = base.CharProperty()
-    ReplicationRegions = base.ListProperty()
-    PullZones = base.ListProperty()
-    ReadOnlyPassword = base.CharProperty(required=False)
+    def delete(self) -> bool:
+        """
+        Delete the file from the storage zone.
 
-    def __str__(self):
-        return self.Name
+        :return: True if the file was deleted successfully, False otherwise.
+        """
+        url = self._get_url()
+        response = requests.delete(url, headers={"AccessKey": self.access_key})
 
-    def all(self, folder=''):
-        if not folder.endswith('/'):
-            folder = f"{folder}/"
-        return [StorageObject(self.api_key, self, **i) for i in self.call_storage_api(f"/{self.Name}/{folder}", "GET")]
+        if response.status_code != 200:
+            return False
 
-    def get(self, file_path):
-        response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
-        if isinstance(response,dict) and response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
-        return response
+        return True
 
-    def get_object(self, file_path):
-        response = self.call_storage_api(f"/{self.Name}/{file_path}", "GET")
-        if isinstance(response,dict) and response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
-        return [StorageObject(self.api_key, self, **i) for i in self.call_storage_api(f"/{self.Name}/", "GET") if file_path==i.get('ObjectName','') ][0]
+    def _get_url(self) -> str:
+        """
+        Get the URL for the file in the storage zone.
 
-    def head_file(self, file_path):
-        return self.call_storage_api(f"/{self.Name}/{file_path}", "HEAD")
-
-    def upload_file(self, dest_path, file_name, local_path):
-        return self.call_storage_api(f"/{self.Name}/{dest_path}/{file_name}", "PUT",
-                                     data=open(local_path, 'rb').read())
-
-    def create_file(self, file_name, content):
-        pass
-
-    def create_json(self, key, data_dict):
-        f = BytesIO(json.dumps(data_dict).encode())
-        return self.call_storage_api(f"/{self.Name}/{key}", "PUT",
-                                     data=f.read())
-
-    def delete(self):
-        return self.call_api(f"/storagezone/{self.Id}", "DELETE")
-
-    def delete_file(self, file_path):
-        response = self.call_storage_api(f"/{self.Name}/{file_path}", "DELETE")
-        if response.get('HttpCode',0) == 404:
-            raise Exception(f"Error:{response.get('Message','')}")
-        return response
+        :return: The URL for the file.
+        """
+        url = f"https://{self.region}storage.bunnycdn.com/{self.storage_zone_name}/{self.object_name}"
+        return url
+    
+    def __repr__(self):
+        return f"<File {self.object_name}>"
 
 
+class Storage:
+    """
+    A Python library for interacting with the BunnyCDN Storage API.
+    """
 
-class StorageObject(base.BaseStorageBunny):
-    endpoint_url = env('BUNNYCDN_STORAGE_API_ENDPOINT', 'https://storage.bunnycdn.com')
+    def __init__(self, access_key: str, storage_zone_name: str, region: str = ""):
+        self.access_key = access_key
+        self.storage_zone_name = storage_zone_name
+        if region not in ["", "CZ", "UK", "ES", "SE", "NY", "MI", "SG", "HK", "LA", "BR", "SYD", "WA", "JP"]:
+            raise ValueError("Invalid region.")
+        if region != "":
+            region = f"{region}."
+        self.region = region
 
-    Guid = base.SlugProperty(required=True)
-    StorageZoneName = base.CharProperty(required=True)
-    Path = base.CharProperty(required=True)
-    ObjectName = base.CharProperty(required=True)
-    Length = base.IntegerProperty()
-    LastChanged = base.DateTimeProperty()
-    ServerId = base.IntegerProperty()
-    IsDirectory = base.BooleanProperty()
-    UserId = base.SlugProperty(required=True)
-    ContentType = base.CharProperty()
-    DateCreated = base.DateTimeProperty()
-    StorageZoneId = base.IntegerProperty(required=True)
-    Checksum = base.CharProperty()
-    ReplicatedZones = base.ListProperty()
+    def list_files(self, path: str = "") -> list[File]:
+        """
+        List the files and directories in the specified directory.
 
-    def __init__(self,
-                 api_key,
-                 storage_zone,
-                 endpoint_url=None,
-                 **kwargs
-                 ):
-        self.storage_zone = storage_zone
-        super().__init__(api_key, endpoint_url=endpoint_url, **kwargs)
+        :param path: The path to list. Defaults to the root directory.
+        :return: A list of File objects.
+        """
+        if path == "":
+            url = f"https://{self.region}storage.bunnycdn.com/{self.storage_zone_name}/"
+        else:
+            url = f"https://{self.region}storage.bunnycdn.com/{self.storage_zone_name}/{path}/"
+        response = requests.get(url, headers={"AccessKey": self.access_key})
 
-    def __str__(self):
-        return f"{self.Path}{self.ObjectName}"
+        if response.status_code != 200:
+            raise Exception(response.content)
 
-    def get_region(self):
-        return self.storage_zone.Region.lower()
+        files = []
+        for item in response.json():
+            file = File(access_key=self.access_key, storage_zone_name=self.storage_zone_name, region=self.region,
+                        **item)
+            files.append(file)
 
-    def delete(self):
-        return self.call_storage_api(f"/{self.storage_zone.Name}/{self.Path}/{self.ObjectName}", "DELETE")
+        return files
 
 
+class StorageZone:
+    pass

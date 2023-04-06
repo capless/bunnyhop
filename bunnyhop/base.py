@@ -1,81 +1,104 @@
-from json import JSONDecodeError
+import datetime
+import re
 
 import requests
 
-from envs import env
-from valley.contrib import Schema
-# Imports for other modules
-from valley.properties import FloatProperty, CharProperty, ListProperty, IntegerProperty, EmailProperty, \
-    DateTimeProperty, BooleanProperty, SlugProperty, DictProperty
+
+def pascal_to_snake(s: str):
+    """
+    Convert a string from PascalCase to snake_case.
+    Args:
+        s (str): A string in PascalCase.
+    """
+    s = s.replace(' ', '_')
+    s = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1_\2', s)
+    snake_case = re.sub(r'([a-z\d])([A-Z])', r'\1_\2', s).lower()
+    return snake_case
 
 
-class BaseBunny(Schema):
-    endpoint_url = env('BUNNYCDN_API_ENDPOINT', 'https://bunnycdn.com/api')
+def convert_datetime_str(d: str):
+    """
+    Convert a datetime string to a datetime object.
+    Args:
+        d (str): A datetime string.
+    """
+    try:
+        return datetime.datetime.strptime(d, '%Y-%m-%dT%H:%M:%SZ')
+    except ValueError:
+        try:
+            return datetime.datetime.strptime(d, '%Y-%m-%dT%H:%M:%S')
+        except ValueError:
+            return d
 
-    def __init__(self,
-                 api_key,
-                 endpoint_url=None,
-                 **kwargs
-                 ):
-        self.api_key = api_key
-        if endpoint_url:
-            self.endpoint_url = endpoint_url
-        super().__init__(**kwargs)
+
+def convert_dict_keys(d: dict):
+    """
+    Convert the keys of a dictionary from PascalCase to snake_case.
+    Args:
+        d (dict): A dictionary with keys in PascalCase.
+    """
+
+    cd = {pascal_to_snake(k): v for k, v in d.items()}
+    if 'last_modified' in cd:
+        cd['last_modified'] = convert_datetime_str(cd['last_modified'])
+    return cd
+
+
+class Record(object):
+    """Base class for all Bunnyhop records."""
+
+    def __init__(self, data: dict):
+        """
+        Record constructor.
+        Attributes:
+            id (str): The record id.
+            last_modified (datetime): The last modified time.
+        """
+        self.__dict__.update(convert_dict_keys(data))
 
     def __repr__(self):
-        return '<{class_name}: {uni} >'.format(
-            class_name=self.__class__.__name__, uni=self.__str__())
-
-    def get_header(self):
-        header = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'accesskey': self.api_key
-        }
-        return header
-
-    def get_url(self, api_url, endpoint_url):
-        if endpoint_url:
-            url = f"{endpoint_url}{api_url}"
+        if hasattr(self, 'id'):
+            return f'<{self.__class__.__name__}({self.id})>'
         else:
-            url = f"{self.endpoint_url}{api_url}"
-        return url
+            return f'<{self.__class__.__name__}>'
 
-    def call_api(self, api_url, api_method, header=None, params={}, data={}, json_data={}, endpoint_url=None):
-        if not header:
-            header = self.get_header()
-        r = requests.request(
-                method=api_method, url=self.get_url(api_url, endpoint_url), headers=header, params=params, data=data,
-                json=json_data)
-        try:
-            return r.json()
-        except JSONDecodeError:
-            return r.content
+    def __iter__(self):
+        return iter(self.__dict__.get('objects', []))
 
+    def __len__(self):
+        return len(self.__dict__.get('objects', []))
 
-class BaseStorageBunny(BaseBunny):
-    storage_endpoint_url = env('BUNNYCDN_STORAGE_API_ENDPOINT', 'storage.bunnycdn.com')
+    def __getitem__(self, key):
+        return self.__dict__.get('objects', [])[key]
 
-    def get_storage_header(self):
-        return {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'AccessKey': self.api_key
-        }
+class APIKeyRecord(Record):
+    """Base class for all Bunnyhop API key records."""
 
-    def get_storage_endpoint(self, region):
-        return f"https://{region}.{self.storage_endpoint_url}"
+    API_BASE_URL = 'https://api.bunny.net'
 
-    def get_region(self):
-        return self.Region.lower()
+    def __init__(self, api_key: str, data: dict = {}):
+        """
+        APIKeyRecord constructor.
+        Args:
+            api_key (str): BunnyCDN's API key.
+            data (dict): A dict representation of a record.
+        Attributes:
+            api_key (str): BunnyCDN's API key.
+        """
+        super().__init__(data)
+        self.api_key = api_key
 
-    def call_storage_api(self, api_url, api_method, header=None, params={}, data={}, json_data={}, files=None,
-                         endpoint_url=None):
-        if not header:
-            header = self.get_storage_header()
-        if not endpoint_url:
-            endpoint_url = self.get_storage_endpoint(self.get_region())
-        if files:
-            return requests.put(self.get_url(api_url, endpoint_url), headers=header, files=files)
-        return self.call_api(api_url, api_method, header=header, params={}, data=data, json_data=json_data,
-                             endpoint_url=endpoint_url)
+    def _make_request(self, method, path, headers={}, **kwargs):
+        """Make an API request to BunnyCDN.
+        Args:
+            method (str): The API method (GET, POST, etc.).
+            path (str): The API endpoint.
+            **kwargs: Additional keyword arguments to pass to the request.
+        Returns:
+            The response object from the API request.
+        """
+        headers.update({'AccessKey': self.api_key})
+        url = f'{self.API_BASE_URL}{path}'
+        response = requests.request(method, url, headers=headers, **kwargs)
+        response.raise_for_status()
+        return response.json()
