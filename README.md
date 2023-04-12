@@ -1,5 +1,5 @@
 # bunnyhop
-Python library for BunnyCDN
+Python library for Bunny.net's API (https://docs.bunny.net/reference/bunnynet-api-overview)
 
 ## Status
 Documentation only phase
